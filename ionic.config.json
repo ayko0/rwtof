@@ -1,0 +1,7 @@
+{
+  "name": "rwtof",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

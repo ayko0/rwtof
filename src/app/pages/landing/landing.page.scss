@@ -1,0 +1,32 @@
+ion-content {
+    --background: #f8f8f8; /* Hintergrundfarbe für den gesamten Content-Bereich */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Für das Positionieren des FAB */
+  }
+  
+  ion-img {
+    max-width: 80%; /* Bild auf 80% der Breite setzen */
+    height: auto;
+    margin-bottom: 20px; /* Abstand nach unten, um Platz für den FAB zu schaffen */
+  }
+  
+  ion-fab {
+    position: absolute; /* Das FAB wird relativ zum ion-content positioniert */
+    right: 16px; /* Abstand von der rechten Seite */
+    bottom: 16px; /* Abstand von der unteren Seite */
+  }
+  
+  ion-fab-button {
+    --background: #3880ff; /* Farbe des FAB-Buttons */
+    --border-radius: 50%; /* Runde Form für den Button */
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ein leichter Schatten für den Button */
+  }
+  
+  ion-icon {
+    font-size: 40px;
+    color: #582031; 
+  }
+  
+  
