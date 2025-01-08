@@ -1,8 +1,10 @@
 <ion-content [fullscreen]="true">
+  <div class="image-container">
   <ion-img src="assets/rwtlogo.png"/>
-<ion-fab>
-  <ion-fab-button [routerLink]="['/login']">
-    <ion-icon></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+</div>
+  <div class="center">
+  <ion-button [routerLink]="['/login']">
+    <p>Get Started</p>
+  </ion-button>
+  </div>
 </ion-content>

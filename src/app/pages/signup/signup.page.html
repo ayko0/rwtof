@@ -3,28 +3,26 @@
     <ion-title>Welcome</ion-title>
     <p>Sign up to create your own account</p>
   </div>
-  <form (submit)="onSubmit()">
+  <form>
     <div class="ion-padding">
       <ion-item>
-        <ion-input placeholder="Email" [(ngModel)]="email" name="email"></ion-input>
+        <ion-input placeholder="Email" name="email"></ion-input>
         <ion-icon></ion-icon>
       </ion-item>
       <ion-item>
-        <ion-input placeholder="Username" [(ngModel)]="username" name="username"></ion-input>
+        <ion-input placeholder="Username" name="username"></ion-input>
         <ion-icon></ion-icon>
       </ion-item>
       <ion-item>
-        <ion-input placeholder="Password" [(ngModel)]="password" name="password" type="password"></ion-input>
+        <ion-input placeholder="Password" name="password" type="password"></ion-input>
         <ion-icon></ion-icon>
       </ion-item>
     </div>
     <div>
       <p>Already have an account? <a [routerLink]="['/login']">Login</a></p>
     </div>
-    <ion-fab>
-      <ion-fab-button type="submit">
-        <ion-icon name="chevron-forward"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+      <ion-button type="submit">
+        Signup
+      </ion-button>
   </form>
 </ion-content>

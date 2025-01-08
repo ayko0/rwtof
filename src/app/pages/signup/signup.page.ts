@@ -2,41 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonIcon, IonFab, IonFabButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonIcon, IonFab, IonFabButton, IonButton } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
   standalone: true,
-  imports: [IonFabButton, IonFab, IonIcon, IonInput, IonItem, RouterModule, IonContent, IonTitle, CommonModule, FormsModule]
+  imports: [IonButton, IonFabButton, IonFab, IonIcon, IonInput, IonItem, RouterModule, IonContent, IonTitle, CommonModule, FormsModule]
 })
-export class SignupPage {
-  email = '';
-  username = '';
-  password = '';
+export class SignUpPage implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor() { }
 
-  onSubmit() {
-    const data = {
-      email: this.email,
-      username: this.username,
-      password: this.password,
-    };
-
-    this.authService.signUp(data).subscribe({
-      next: (response) => {
-        console.log('Erfolgreich registriert:', response);
-        alert('Registrierung erfolgreich!');
-        this.router.navigate(['/login']); // Nach Registrierung zur Login-Seite weiterleiten
-      },
-      error: (error) => {
-        console.error('Registrierung fehlgeschlagen:', error);
-        alert('Registrierung fehlgeschlagen.');
-      },
-    });
+  ngOnInit() {
   }
+
 }
