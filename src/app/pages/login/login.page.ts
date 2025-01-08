@@ -11,7 +11,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonIcon
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonFabButton, HttpClientModule, IonFab, IonIcon, IonInput, IonItem, RouterModule, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonFabButton, HttpClientModule, IonFab, IonIcon, IonInput, IonItem, RouterModule, IonContent, IonTitle, CommonModule, FormsModule]
 })
 export class LoginPage implements OnInit {
 

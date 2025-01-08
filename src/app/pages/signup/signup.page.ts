@@ -11,7 +11,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonIcon
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
   standalone: true,
-  imports: [IonFabButton, IonFab, IonIcon, IonInput, IonItem, RouterModule, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonFabButton, IonFab, IonIcon, IonInput, IonItem, RouterModule, IonContent, IonTitle, CommonModule, FormsModule]
 })
 export class SignupPage {
   email = '';
