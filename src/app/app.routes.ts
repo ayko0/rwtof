@@ -25,5 +25,9 @@ export const routes: Routes = [
   {
     path: 'resetpassword',
     loadComponent: () => import('./pages/resetpassword/resetpassword.page').then( m => m.ResetpasswordPage)
+  },  {
+    path: 'new-entry',
+    loadComponent: () => import('./new-entry/new-entry.page').then( m => m.NewEntryPage)
   },
+
 ];
