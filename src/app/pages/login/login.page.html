@@ -1,27 +1,28 @@
 <ion-content [fullscreen]="true">
+  <div class="logo">
+    <img src="assets/animal.png" alt="Logo">
+  </div>
   <div>
     <ion-title class="titel">Welcome back</ion-title>
-    <p class="subTitle">Sign in to access your account</p>
+    <p class="subtitle">Sign in to access your account</p>
   </div>
-  <form (ngSubmit)="login()">
-    <div class="ion-padding">
-      <ion-item>
-        <ion-input placeholder="Username" [(ngModel)]="username" name="username"></ion-input>
-        <ion-icon></ion-icon>
-      </ion-item>
-      <ion-item>
-        <ion-input placeholder="Password" [(ngModel)]="password" type="password" name="password"></ion-input>
-        <ion-icon></ion-icon>
-      </ion-item>
+  <div class="container">
+    <form (ngSubmit)="login()">
+      <div class="data">
+        <ion-item class="user">
+          <ion-input placeholder="Email address" [(ngModel)]="username" name="user" type="email"></ion-input>
+          <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+        </ion-item>
+        <ion-item class="pass">
+          <ion-input placeholder="Password" [(ngModel)]="password" type="password" name="password"></ion-input>
+          <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
+        </ion-item>
+      </div>
+      <ion-button type="submit" class="btnlogin">Login</ion-button>
+    </form>
+    <div class="additional-links">
+      <a [routerLink]="['/signup']">Sign up</a>
+      <a [routerLink]="['/resetpassword']">Forgot Password?</a>
     </div>
-    <div class="forgotpassword">
-      <a [routerLink]="['/resetpassword']">Forgot password?</a>
-    </div>
-    <div>
-      <p>Don't have an account? <a [routerLink]="['/signup']">Signup</a></p>
-    </div>
-    <ion-button type="submit">
-      Login
-    </ion-button>
-  </form>
+  </div>
 </ion-content>

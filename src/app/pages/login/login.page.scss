@@ -1,0 +1,129 @@
+ion-content {
+    --background: #7490b0b4; /* Weiß */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .logo {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    margin-top:110px;
+    animation: fadeIn 2s ease;
+  }
+  
+  .logo img {
+    width: 120px;
+    height: auto;
+  }
+  
+  .titel {
+    font-size: 2em;
+    color: #cdc3c4; /* Babypink */
+    text-align: center;
+    margin-top: 10px;
+    animation: fadeIn 1.5s ease;
+  }
+  
+  .subtitle {
+    font-size: 1.2em;
+    color: #87cefa; /* Babyblau */
+    text-align: center;
+    margin-bottom: 10px;
+    animation: fadeIn 1.5s ease 0.5s;
+    margin-top: 7px;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 55vh;
+    padding: 0 20px;
+    animation: fadeIn 2s ease 1s;
+  }
+  
+  .data {
+    width: 100%;
+    max-width: 400px;
+    background: #f0f8ff; /* sehr helles Blau */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .data:hover {
+    transform: translateY(-10px);
+  }
+  
+  ion-item {
+    --background: #ffffff; /* Weiß */
+    --border-color: #87cefa; /* Babyblau */
+    --ion-color-base: #ffb6c1; /* Babypink */
+    margin: 10px 0;
+    border: 1px solid #87cefa; /* Babyblau */
+    border-radius: 5px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  ion-item:hover {
+    box-shadow: 0 4px 8px rgba(135, 206, 250, 0.5);
+  }
+  
+  ion-input {
+    --color: #000000; /* Schwarz für den Text */
+  }
+  
+  ion-input::placeholder {
+    color: #ffb6c1; /* Babypink */
+  }
+  
+  ion-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #87cefa; /* Babyblau */
+  }
+  
+  .btnlogin {
+    --background: #87cefa; /* Babyblau */
+    --color: #ffffff; /* Weiß */
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+  }
+  
+  .btnlogin:hover {
+    --background: #ffb6c1; /* Babypink */
+  }
+  
+  .additional-links {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .additional-links a {
+    color: #87cefa; /* Babyblau */
+    margin: 0 10px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .additional-links a:hover {
+    color: #ffb6c1; /* Babypink */
+    text-decoration: underline;
+  }
+  
