@@ -2,13 +2,9 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { config } from 'dotenv';
-
-config();
-
 export const environment = {
   production: false,
-  apiKey: process.env['API_KEY']
+  apiKey: 'your-api-key-here' // Replace with your actual API key
 };
 /*
  * For easier debugging in development mode, you can import the following file

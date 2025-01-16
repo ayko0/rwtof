@@ -1,18 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { AlertController } from '@ionic/angular';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonIcon, IonFab, IonFabButton, IonButton } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  standalone: true,
-  imports: [IonButton, IonFabButton, IonFab, IonIcon, IonInput, IonItem, RouterModule, IonContent, IonTitle, CommonModule, FormsModule]
 })
 
 export class LoginPage {
@@ -21,27 +15,34 @@ export class LoginPage {
 
   constructor(private authService: AuthService, private router: Router, private alertController: AlertController) {}
 
-async login() {
-  this.authService.login(this.username, this.password).subscribe({
-    next: async (response) => {
-      console.log(response);
-      this.router.navigate(['/home']);
-    },
-    error: async (error) => {
-      console.error(error);
+  async login() {
+    if (!this.username || !this.password) {
       const alert = await this.alertController.create({
         header: 'Login failed',
-        message: 'Username or password incorrect.',
+        message: 'Please enter both username and password.',
         buttons: ['OK']
       });
       await alert.present();
-    },
-    complete: () => {
-      console.log('Login request complete.');
+      return;
     }
-  });
-}
 
-  
+    this.authService.login(this.username, this.password).subscribe({
+      next: async (response) => {
+        console.log(response);
+        this.router.navigate(['/home']);
+      },
+      error: async (error) => {
+        console.error(error);
+        const alert = await this.alertController.create({
+          header: 'Login failed',
+          message: 'Username or password incorrect.',
+          buttons: ['OK']
+        });
+        await alert.present();
+      },
+      complete: () => {
+        console.log('Login request complete.');
+      }
+    });
+  }
 }
-
