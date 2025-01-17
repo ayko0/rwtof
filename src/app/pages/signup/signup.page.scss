@@ -1,11 +1,12 @@
 ion-content {
-    --background: #001f3f; /* Dunkelblau */
+    --background: #7490b0b4;
   }
   
   .logo {
     display: flex;
     justify-content: center;
     margin: 20px 0;
+    margin-top: 80px;
     animation: fadeIn 2s ease;
   }
   
@@ -16,15 +17,23 @@ ion-content {
   
   ion-title {
     font-size: 2em;
-    color: #ffb6c1; /* Babypink */
+    color: #cdc3c4;
     text-align: center;
     margin-top: 10px;
     animation: fadeIn 1.5s ease;
   }
-  
+  .subtitle {
+    font-size: 18px;
+    color: #87cefa;
+    text-align: center;
+    margin-bottom: 10px;
+    animation: fadeIn 1.5s ease 0.5s;
+    margin-top: 7px;
+  }
+
   p {
     font-size: 1.2em;
-    color: #87cefa; /* Babyblau */
+    color: #87cefa;
     text-align: center;
     margin-bottom: 20px;
     animation: fadeIn 1.5s ease 0.5s;
@@ -35,7 +44,7 @@ ion-content {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 60vh;
     padding: 0 20px;
     animation: fadeIn 2s ease 1s;
   }
@@ -43,7 +52,7 @@ ion-content {
   .data {
     width: 100%;
     max-width: 400px;
-    background: #f0f8ff; /* sehr helles Blau */
+    background: #f0f8ff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -55,11 +64,11 @@ ion-content {
   }
   
   ion-item {
-    --background: #ffffff; /* Weiß */
-    --border-color: #87cefa; /* Babyblau */
-    --ion-color-base: #ffb6c1; /* Babypink */
+    --background: #ffffff;
+    --border-color: #87cefa;
+    --ion-color-base: #ffb6c1;
     margin: 10px 0;
-    border: 1px solid #87cefa; /* Babyblau */
+    border: 1px solid #87cefa;
     border-radius: 5px;
     position: relative;
     transition: box-shadow 0.3s ease;
@@ -70,11 +79,11 @@ ion-content {
   }
   
   ion-input {
-    --color: #000000; /* Schwarz für den Text */
+    --color: #000000;
   }
   
   ion-input::placeholder {
-    color: #ffb6c1; /* Babypink */
+    color: #ffb6c1;
   }
   
   ion-icon {
@@ -82,12 +91,12 @@ ion-content {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #87cefa; /* Babyblau */
+    color: #87cefa;
   }
   
   .btnsignup {
-    --background: #87cefa; /* Babyblau */
-    --color: #ffffff; /* Weiß */
+    --background: #87cefa;
+    --color: #ffffff;
     width: 100%;
     margin-top: 20px;
     padding: 10px;
@@ -96,22 +105,31 @@ ion-content {
   }
   
   .btnsignup:hover {
-    --background: #ffb6c1; /* Babypink */
+    --background: #ffb6c1;
   }
   
   .additional-links {
     margin-top: 20px;
     text-align: center;
+    font-size: 17px;
   }
   
   .additional-links a {
-    color: #87cefa; /* Babyblau */
+    color: #87cefa;
+    margin: 0 10px;
     text-decoration: none;
     transition: color 0.3s ease;
   }
   
   .additional-links a:hover {
-    color: #ffb6c1; /* Babypink */
+    color: #ffb6c1;
     text-decoration: underline;
+  }
+  .links{
+    color: #87cefa;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 17px;
   }
   

@@ -30,7 +30,7 @@ app.post('/signup', async (req, res) => {
   }
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const query = 'INSERT INTO users (email, username, password) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO tbl_user (email, username, password) VALUES (?, ?, ?)';
     db.query(query, [email, username, hashedPassword], (err, result) => {
       if (err) {
         console.error('Error inserting user:', err);

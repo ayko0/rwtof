@@ -1,10 +1,10 @@
 <ion-content [fullscreen]="true">
   <div class="logo">
-    <img src="assets/logo.png" alt="Logo">
+    <img src="assets/animal.png" alt="Logo">
   </div>
   <div>
     <ion-title>Welcome</ion-title>
-    <p>Sign up to create your own account</p>
+    <p class="subtitle">Sign up to create your own account</p>
   </div>
   <div class="container">
     <form (ngSubmit)="signup()">
@@ -25,7 +25,8 @@
       <ion-button type="submit" class="btnsignup">Signup</ion-button>
     </form>
     <div class="additional-links">
-      <p>Already have an account? <a [routerLink]="['/login']">Login</a></p>
+      <p class="links">Already have an account?</p> 
+      <a [routerLink]="['/login']">Log in</a>
     </div>
   </div>
 </ion-content>
