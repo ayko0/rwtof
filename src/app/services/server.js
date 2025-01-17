@@ -1,9 +1,13 @@
 const express = require('express');
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
+const multer = require('multer');
+const fs = require('fs');
 const app = express();
 
 app.use(express.json());
+
+const upload = multer({ dest: 'uploads/' });
 
 const db = mysql.createConnection({
   host: 'db4free.net',
@@ -52,15 +56,18 @@ app.post('/login', (req, res) => {
 });
 
 // Media entry endpoint
-app.post('/tbl_media', (req, res) => {
+app.post('/tbl_media', upload.single('img'), (req, res) => {
   const {name, type, genre } = req.body;
+  const img = fs.readFileSync(req.file.path);
   db.query(
-    'INSERT INTO tbl_media (name, type, genre) VALUES (?, ?, ?)',
-    [name, type, genre],
+    'INSERT INTO tbl_media (name, type, genre, img) VALUES (?, ?, ?, ?)',
+    [name, type, genre, img],
     (err, result) => {
       if (err) {
-        return res.status(500).send(err);
+        console.error('Fehler bei der Datenbankiseration:', err);
+        return res.status(500).send('Fehler bei der Datenbankinsertion');
       }
+      fs.unlinkSync(req.file.path);
       res.status(201).send('Media entry added');
     }
   );
