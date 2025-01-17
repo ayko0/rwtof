@@ -1,5 +1,5 @@
 ion-content {
-    --background: #7490b0b4; /* Weiß */
+    --background: #7490b0b4;
   }
   
   @keyframes fadeIn {
@@ -26,7 +26,7 @@ ion-content {
   
   .titel {
     font-size: 2em;
-    color: #cdc3c4; /* Babypink */
+    color: #cdc3c4;
     text-align: center;
     margin-top: 10px;
     animation: fadeIn 1.5s ease;
@@ -34,7 +34,7 @@ ion-content {
   
   .subtitle {
     font-size: 1.2em;
-    color: #87cefa; /* Babyblau */
+    color: #87cefa;
     text-align: center;
     margin-bottom: 10px;
     animation: fadeIn 1.5s ease 0.5s;
@@ -54,7 +54,7 @@ ion-content {
   .data {
     width: 100%;
     max-width: 400px;
-    background: #f0f8ff; /* sehr helles Blau */
+    background: #f0f8ff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -66,11 +66,11 @@ ion-content {
   }
   
   ion-item {
-    --background: #ffffff; /* Weiß */
-    --border-color: #87cefa; /* Babyblau */
-    --ion-color-base: #ffb6c1; /* Babypink */
+    --background: #ffffff;
+    --border-color: #87cefa;
+    --ion-color-base: #ffb6c1;
     margin: 10px 0;
-    border: 1px solid #87cefa; /* Babyblau */
+    border: 1px solid #87cefa;
     border-radius: 5px;
     position: relative;
     transition: box-shadow 0.3s ease;
@@ -81,11 +81,11 @@ ion-content {
   }
   
   ion-input {
-    --color: #000000; /* Schwarz für den Text */
+    --color: #000000;
   }
   
   ion-input::placeholder {
-    color: #ffb6c1; /* Babypink */
+    color: #ffb6c1;
   }
   
   ion-icon {
@@ -93,12 +93,12 @@ ion-content {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #87cefa; /* Babyblau */
+    color: #87cefa; 
   }
   
   .btnlogin {
-    --background: #87cefa; /* Babyblau */
-    --color: #ffffff; /* Weiß */
+    --background: #87cefa;
+    --color: #ffffff;
     width: 100%;
     margin-top: 20px;
     padding: 10px;
@@ -107,7 +107,7 @@ ion-content {
   }
   
   .btnlogin:hover {
-    --background: #ffb6c1; /* Babypink */
+    --background: #ffb6c1;
   }
   
   .additional-links {
@@ -116,14 +116,14 @@ ion-content {
   }
   
   .additional-links a {
-    color: #87cefa; /* Babyblau */
+    color: #87cefa;
     margin: 0 10px;
     text-decoration: none;
     transition: color 0.3s ease;
   }
   
   .additional-links a:hover {
-    color: #ffb6c1; /* Babypink */
+    color: #ffb6c1;
     text-decoration: underline;
   }
   

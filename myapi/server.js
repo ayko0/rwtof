@@ -25,44 +25,26 @@ db.connect((err) => {
 // Signup endpoint
 app.post('/signup', async (req, res) => {
   const { email, username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  db.query(
-    'INSERT INTO tbl_user (email, username, password) VALUES (?, ?, ?)',
-    [email, username, hashedPassword],
-    (err, result) => {
+  if (!email || !username || !password) {
+    return res.status(400).send('All fields are required');
+  }
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const query = 'INSERT INTO users (email, username, password) VALUES (?, ?, ?)';
+    db.query(query, [email, username, hashedPassword], (err, result) => {
       if (err) {
-        console.error('Error during user registration:', err);
-        return res.status(500).send(err);
+        console.error('Error inserting user:', err);
+        return res.status(500).send('Server error');
       }
-      res.status(201).send('User registered');
-    }
-  );
+      res.status(201).send('User created');
+    });
+  } catch (error) {
+    console.error('Error hashing password:', error);
+    res.status(500).send('Server error');
+  }
 });
 
-// Login endpoint
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  db.query(
-    'SELECT * FROM tbl_user WHERE username = ?',
-    [username],
-    async (err, results) => {
-      if (err) {
-        console.error('Error during login:', err);
-        return res.status(500).send(err);
-      }
-      if (results.length === 0) {
-        return res.status(401).send('User not found');
-      }
-      const user = results[0];
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(401).send('Password incorrect');
-      }
-      res.send('Login successful');
-    }
-  );
-});
-
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

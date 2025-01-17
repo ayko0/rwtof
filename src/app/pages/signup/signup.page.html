@@ -1,28 +1,31 @@
 <ion-content [fullscreen]="true">
+  <div class="logo">
+    <img src="assets/logo.png" alt="Logo">
+  </div>
   <div>
     <ion-title>Welcome</ion-title>
     <p>Sign up to create your own account</p>
   </div>
-  <form (ngSubmit)="signup()">
-    <div class="ion-padding">
-      <ion-item>
-        <ion-input placeholder="Email" [(ngModel)]="email" name="email"></ion-input>
-        <ion-icon></ion-icon>
-      </ion-item>
-      <ion-item>
-        <ion-input placeholder="Username" [(ngModel)]="username" name="username"></ion-input>
-        <ion-icon></ion-icon>
-      </ion-item>
-      <ion-item>
-        <ion-input placeholder="Password" [(ngModel)]="password" type="password" name="password"></ion-input>
-        <ion-icon></ion-icon>
-      </ion-item>
-    </div>
-    <div>
+  <div class="container">
+    <form (ngSubmit)="signup()">
+      <div class="data">
+        <ion-item>
+          <ion-input placeholder="Email" [(ngModel)]="email" name="email" type="email"></ion-input>
+          <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="Username" [(ngModel)]="username" name="username"></ion-input>
+          <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-input placeholder="Password" [(ngModel)]="password" type="password" name="password"></ion-input>
+          <ion-icon name="eye-outline" aria-hidden="true"></ion-icon>
+        </ion-item>
+      </div>
+      <ion-button type="submit" class="btnsignup">Signup</ion-button>
+    </form>
+    <div class="additional-links">
       <p>Already have an account? <a [routerLink]="['/login']">Login</a></p>
     </div>
-    <ion-button type="submit">
-      Signup
-    </ion-button>
-  </form>
+  </div>
 </ion-content>
