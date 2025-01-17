@@ -51,6 +51,21 @@ app.post('/login', (req, res) => {
   );
 });
 
+// Media entry endpoint
+app.post('/tbl_media', (req, res) => {
+  const {name, type, genre } = req.body;
+  db.query(
+    'INSERT INTO tbl_media (name, type, genre) VALUES (?, ?, ?)',
+    [name, type, genre],
+    (err, result) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      res.status(201).send('Media entry added');
+    }
+  );
+});
+
 app.listen(3000, () => {
   console.log('Server running on port 3000');
 });

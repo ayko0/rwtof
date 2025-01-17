@@ -18,15 +18,18 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Typ</ion-label>
-      <ion-select [(ngModel)]="media.type" name="type" required>
-      <ion-select-option value="1">Buch</ion-select-option>
+      <ion-select [(ngModel)]="media.type" name="type" required (ionChange)="onTypeChange($event)">
+      <ion-select-option value="1" >Buch</ion-select-option>
       <ion-select-option value="2">Serie</ion-select-option>
       <ion-select-option value="3">Film</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Genre</ion-label>
-      <ion-select [(ngModel)]="media.genre" name="genre" required></ion-select>
+      <ion-select [(ngModel)]="media.genre" name="genre" required>
+        <ion-select-option *ngFor="let genre of availableGenres" [value]="genre">{{genre}}</ion-select-option>
+        <ion-select-option *ngIf="availableGenres.length === 0" value=""></ion-select-option>
+      </ion-select>
       
     </ion-item>
     <ion-button expand="full" type="submit">Speichern</ion-button>
