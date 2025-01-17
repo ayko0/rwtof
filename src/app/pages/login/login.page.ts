@@ -1,14 +1,19 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonIcon, IonFab, IonFabButton, IonButton } from '@ionic/angular/standalone';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  standalone: true,
+  imports: [IonButton, IonFabButton, IonFab, IonIcon, IonInput, IonItem, RouterModule, IonContent, IonTitle, CommonModule, FormsModule]
 })
-
 export class LoginPage {
   username: string = '';
   password: string = '';
@@ -26,23 +31,21 @@ export class LoginPage {
       return;
     }
 
-    this.authService.login(this.username, this.password).subscribe({
-      next: async (response) => {
+    this.authService.login(this.username, this.password).subscribe(
+      async response => {
         console.log(response);
-        this.router.navigate(['/home']);
+        // Weiterleitung nach erfolgreichem Login
+        await this.router.navigate(['/home']);
       },
-      error: async (error) => {
-        console.error(error);
+      async error => {
+        console.error('Login error:', error);
         const alert = await this.alertController.create({
           header: 'Login failed',
-          message: 'Username or password incorrect.',
+          message: 'Invalid username or password.',
           buttons: ['OK']
         });
         await alert.present();
-      },
-      complete: () => {
-        console.log('Login request complete.');
       }
-    });
+    );
   }
 }
