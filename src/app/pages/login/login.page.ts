@@ -31,21 +31,6 @@ export class LoginPage {
       return;
     }
 
-    this.authService.login(this.username, this.password).subscribe(
-      async response => {
-        console.log(response);
-        // Weiterleitung nach erfolgreichem Login
-        await this.router.navigate(['/home']);
-      },
-      async error => {
-        console.error('Login error:', error);
-        const alert = await this.alertController.create({
-          header: 'Login failed',
-          message: 'Invalid username or password.',
-          buttons: ['OK']
-        });
-        await alert.present();
-      }
-    );
+    
   }
 }

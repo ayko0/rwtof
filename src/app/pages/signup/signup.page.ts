@@ -1,27 +1,35 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonIcon, IonFab, IonFabButton, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
   standalone: true,
-  imports: [IonButton, IonFabButton, IonFab, IonIcon, IonInput, IonItem, RouterModule, IonContent, IonTitle, CommonModule, FormsModule]
+  imports: [IonIcon, IonButton, IonInput, IonItem, RouterModule, IonContent, IonHeader, IonTitle, CommonModule, FormsModule]
 })
 export class SignupPage {
   email: string = '';
   username: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   signup() {
-    this.authService.signup(this.email, this.username, this.password).subscribe(response => {
+    const signupData = {
+      email: this.email,
+      name: this.username,
+      password: this.password
+    };
+
+    this.authService.signup(signupData).subscribe(response => {
       console.log(response);
+      this.router.navigate(['/success']);
     }, (error: any) => {
       console.error('Signup error:', error);
       if (error.status === 500) {
