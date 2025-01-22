@@ -51,6 +51,22 @@ app.post('/signup', (req, res) => {
   });
 });
 
+//neues Medium einfügen
+app.post('/addMedia', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
+  const { name, type, genre, img } = req.body;
+
+  const query = 'INSERT INTO tbl_media (name, type, genre, img) VALUES (?, ?, ?, ?)';
+  db.query(query, [name, type, genre, img], (err, result) => {
+    if (err) {
+      console.error('Fehler beim Eintragen der Mediendaten:', err);
+      res.status(500).json({ message: 'Fehler beim Eintragen der Mediendaten.' });
+      return;
+    }
+    res.status(200).json({ message: 'Mediendaten erfolgreich eingetragen.' });
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
 });
