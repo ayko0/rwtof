@@ -18,7 +18,11 @@ export class LoginPage {
   username: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService, private router: Router, private alertController: AlertController) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertController: AlertController
+  ) {}
 
   async login() {
     if (!this.username || !this.password) {
@@ -33,7 +37,8 @@ export class LoginPage {
 
     this.authService.login({ username: this.username, password: this.password }).subscribe(async (response) => {
       console.log(response);
-      this.router.navigate(['/userprofile']);
+      localStorage.setItem('userId', response.user.id);
+      this.router.navigate(['/profile']);
     }, async (error: any) => {
       console.error('Login-Fehler:', error);
       const alert = await this.alertController.create({
