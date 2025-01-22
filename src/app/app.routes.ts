@@ -29,5 +29,10 @@ export const routes: Routes = [
   { 
     path: 'new-entry', 
     loadComponent: () => import('./pages/new-entry/new-entry.page').then( m => m.NewEntryPage) 
+  },
+  {
+    path: 'userprofile',
+    loadComponent: () => import('./pages/userprofile/userprofile.page').then( m => m.UserprofilePage)
   }
+
 ];

@@ -15,4 +15,9 @@ export class AuthService {
       headers: { 'Content-Type': 'application/json' }
     });
   }
+  login(loginData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}login`, loginData, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 }

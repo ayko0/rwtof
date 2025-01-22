@@ -2,13 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = 3000;
 
 // CORS-Konfiguration
 app.use(cors({
-  origin: 'http://localhost:8100', // URL deiner Angular/Ionic-Anwendung
+  origin: 'http://localhost:8100',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type, Authorization'
 }));
@@ -48,22 +49,6 @@ app.post('/signup', (req, res) => {
       return;
     }
     res.status(200).json({ message: 'Daten erfolgreich eingetragen.' });
-  });
-});
-
-//neues Medium einfügen
-app.post('/addMedia', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
-  const { name, type, genre, img } = req.body;
-
-  const query = 'INSERT INTO tbl_media (name, type, genre, img) VALUES (?, ?, ?, ?)';
-  db.query(query, [name, type, genre, img], (err, result) => {
-    if (err) {
-      console.error('Fehler beim Eintragen der Mediendaten:', err);
-      res.status(500).json({ message: 'Fehler beim Eintragen der Mediendaten.' });
-      return;
-    }
-    res.status(200).json({ message: 'Mediendaten erfolgreich eingetragen.' });
   });
 });
 

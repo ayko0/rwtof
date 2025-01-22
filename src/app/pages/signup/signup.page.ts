@@ -23,13 +23,13 @@ export class SignupPage {
   signup() {
     const signupData = {
       email: this.email,
-      name: this.username,
+      username: this.username,
       password: this.password
     };
 
     this.authService.signup(signupData).subscribe(response => {
       console.log(response);
-      this.router.navigate(['/success']);
+      this.router.navigate(['/home']);
     }, (error: any) => {
       console.error('Signup error:', error);
       if (error.status === 500) {
