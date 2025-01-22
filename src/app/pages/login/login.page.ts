@@ -23,14 +23,25 @@ export class LoginPage {
   async login() {
     if (!this.username || !this.password) {
       const alert = await this.alertController.create({
-        header: 'Login failed',
-        message: 'Please enter both username and password.',
+        header: 'Login fehlgeschlagen',
+        message: 'Bitte Benutzername und Passwort eingeben.',
         buttons: ['OK']
       });
       await alert.present();
       return;
     }
 
-    
+    this.authService.login({ username: this.username, password: this.password }).subscribe(async (response) => {
+      console.log(response);
+      this.router.navigate(['/userprofile']);
+    }, async (error: any) => {
+      console.error('Login-Fehler:', error);
+      const alert = await this.alertController.create({
+        header: 'Login fehlgeschlagen',
+        message: error.error.message,
+        buttons: ['OK']
+      });
+      await alert.present();
+    });
   }
 }
