@@ -4,20 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonSelect, IonSelectOption, IonButton } from '@ionic/angular/standalone';
 import { HttpClient } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-entry',
   templateUrl: './new-entry.page.html',
   styleUrls: ['./new-entry.page.scss'],
   standalone: true,
-  imports: [IonButton, IonInput, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, IonSelect, IonSelectOption, CommonModule, FormsModule]
+  imports: [RouterModule, IonButton, IonInput, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, IonSelect, IonSelectOption, CommonModule, FormsModule]
 })
 export class NewEntryPage implements OnInit {
 
   media = {
     name: '',
     type: '',
-    genre: '',
+    genre: 0 as number,  // Ändere den Typ zu Zahl
     img: null as File | null
   };
 
@@ -37,10 +39,10 @@ export class NewEntryPage implements OnInit {
     const selectedType = event.detail.value;
     if (selectedType) {
       this.availableGenres = this.genres[selectedType];
-      this.media.genre = '';
+      this.media.genre = 0;  // Initialisiere Genre als Integer
     } else {
       this.availableGenres = [];
-      this.media.genre = 'Bitte wählen Sie zuerst einen Typ aus';
+      this.media.genre = 0;  // Initialisiere Genre als Integer
     }
   }
 
@@ -58,24 +60,22 @@ export class NewEntryPage implements OnInit {
     const formData = new FormData();
     formData.append('name', this.media.name);
     formData.append('type', this.media.type);
-    formData.append('genre', this.media.genre);
+    formData.append('genre', this.media.genre.toString()); // Konvertiere Genre zu String
     if (this.media.img) {
       formData.append('img', this.media.img);
-    }
-    else{
+    } else {
       console.error('Kein Bild ausgewählt');
       return;
     }
 
-    this.http.post('http://localhost:3000/tbl_media', formData).subscribe(response =>{
+    this.http.post('http://localhost:3000/tbl_media', formData).subscribe(response => {
       console.log('Media Eintrag erfolgreich:', response);
-    this.navCtrl.navigateRoot('/');
-  }, error=> {
-    console.error('Fehler beim Speichern des Media Eintrags:', error); 
-    alert('Fehler beim Speichern des Media Eintrags');  
-  })
+      this.navCtrl.navigateRoot('/');
+    }, error => {
+      console.error('Fehler beim Speichern des Media Eintrags:', error.error || error);
+      const errMsg = error.error ? error.error.message : error.statusText;
+      alert(`Fehler beim Speichern des Media Eintrags: ${errMsg}`);
+    });
   }
-
-
-
 }
+  

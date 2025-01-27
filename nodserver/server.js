@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 const PORT = 3000;
@@ -37,36 +38,53 @@ app.get('/', (req, res) => {
   res.send('Server ist erreichbar und funktioniert korrekt.');
 });
 
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+}));
+
 app.post('/signup', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
-  const { email, username, password } = req.body;
-  bcrypt.hash(password, 10, (err, hashedPassword) => {
+  const { email, name, password } = req.body;
+
+  const query = 'INSERT INTO tbl_user (email, name, password) VALUES (?, ?, ?)';
+  db.query(query, [email, name, password], (err, result) => {
     if (err) {
-      console.error('Fehler beim Verschlüsseln des Passworts:', err);
-      res.status(500).json({ message: 'Fehler beim Verschlüsseln des Passworts.' });
+      console.error('Fehler beim Eintragen der Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Eintragen der Daten.' });
       return;
     }
-    const query = 'INSERT INTO tbl_user (email, username, password) VALUES (?, ?, ?)';
-    db.query(query, [email, username, hashedPassword], (err, result) => {
-      if (err) {
-        console.error('Fehler beim Eintragen der Daten:', err);
-        res.status(500).json({ message: 'Fehler beim Eintragen der Daten.' });
-        return;
-      }
-      res.status(200).json({ message: 'Daten erfolgreich eingetragen.' });
-    });
+    res.status(200).json({ message: 'Daten erfolgreich eingetragen.' });
   });
 });
-app.post('/login', (req, res) => {
+
+app.post('/tbl_media', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
+  const { name, type, genre } = req.body;
+
+  if (!req.files || !req.files.img) {
+    console.error('Keine Datei hochgeladen.');
+    return res.status(400).json({ message: "Kein Bild hochgeladen." });
+  }
+
+  console.log('Anfrage-Body:', req.body); // Hier hinzufügen
+
+  const img = Buffer.from(req.files.img.data);
+
+  console.log('Empfangene Daten:', { name, type, genre });
+  console.log('Hochgeladene Datei:', req.files.img);
+
+  const query = 'INSERT INTO tbl_media (name, type, genre, img) VALUES (?, ?, ?, ?)';
+  db.query(query, [name, type, genre, Buffer.from(img)], (err, result) => {
   const { username, password } = req.body;
   const query = 'SELECT userID, email, username, password FROM tbl_user WHERE username = ?';
   db.query(query, [username], (err, results) => {
     if (err) {
-      console.error('Fehler beim Abrufen der Daten:', err);
-      res.status(500).json({ message: 'Fehler beim Abrufen der Daten.' });
+      console.error('Fehler beim Eintragen der Media-Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Eintragen der Media-Daten.' });
       return;
     }
+    res.status(200).json({ message: 'Media-Daten erfolgreich eingetragen.' });
     if (results.length === 0) {
       res.status(401).json({ message: 'Benutzername nicht gefunden.' });
       return;
@@ -86,6 +104,7 @@ app.post('/login', (req, res) => {
     });
   });
 });
+
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
 });

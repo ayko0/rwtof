@@ -1,0 +1,70 @@
+ion-content {
+  --background: #7490b0b4;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  margin-top: 110px;
+  animation: fadeIn 2s ease;
+}
+
+.logo img {
+  width: 120px;
+  height: auto;
+}
+
+.titel {
+  font-size: 2em;
+  color: #cdc3c4;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.subtitle {
+  font-size: 1.2em;
+  color: #87cefa;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 7px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 55vh;
+  padding: 0 20px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  background: #87cefa;
+  color: #ffffff;
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #ffb6c1;
+}
