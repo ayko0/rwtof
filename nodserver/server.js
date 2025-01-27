@@ -60,8 +60,7 @@ app.post('/signup', (req, res) => {
 app.post('/login', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
   const { username, password } = req.body;
-
-  const query = 'SELECT * FROM tbl_user WHERE username = ?';
+  const query = 'SELECT userID, email, username, password FROM tbl_user WHERE username = ?';
   db.query(query, [username], (err, results) => {
     if (err) {
       console.error('Fehler beim Abrufen der Daten:', err);
@@ -83,7 +82,7 @@ app.post('/login', (req, res) => {
         res.status(401).json({ message: 'Falsches Passwort.' });
         return;
       }
-      res.status(200).json({ message: 'Login erfolgreich.' });
+      res.status(200).json({ message: 'Login erfolgreich.', id: user.userID, username: user.username , email: user.email});
     });
   });
 });
