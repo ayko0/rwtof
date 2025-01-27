@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 const PORT = 3000;
@@ -37,6 +38,11 @@ app.get('/', (req, res) => {
   res.send('Server ist erreichbar und funktioniert korrekt.');
 });
 
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+}));
+
 app.post('/signup', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
   const { email, name, password } = req.body;
@@ -49,6 +55,33 @@ app.post('/signup', (req, res) => {
       return;
     }
     res.status(200).json({ message: 'Daten erfolgreich eingetragen.' });
+  });
+});
+
+app.post('/tbl_media', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
+  const { name, type, genre } = req.body;
+
+  if (!req.files || !req.files.img) {
+    console.error('Keine Datei hochgeladen.');
+    return res.status(400).json({ message: "Kein Bild hochgeladen." });
+  }
+
+  console.log('Anfrage-Body:', req.body); // Hier hinzufügen
+
+  const img = Buffer.from(req.files.img.data);
+
+  console.log('Empfangene Daten:', { name, type, genre });
+  console.log('Hochgeladene Datei:', req.files.img);
+
+  const query = 'INSERT INTO tbl_media (name, type, genre, img) VALUES (?, ?, ?, ?)';
+  db.query(query, [name, type, genre, Buffer.from(img)], (err, result) => {
+    if (err) {
+      console.error('Fehler beim Eintragen der Media-Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Eintragen der Media-Daten.' });
+      return;
+    }
+    res.status(200).json({ message: 'Media-Daten erfolgreich eingetragen.' });
   });
 });
 
