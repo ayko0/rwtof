@@ -20,4 +20,12 @@ export class AuthService {
       headers: { 'Content-Type': 'application/json' }
     });
   }
+  getProfile(userId: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}userprofile`, {
+      params: { userId: userId.toString() }
+    });
+  }
+  logout() {
+    console.log('Benutzer abgemeldet');
+  }
 }
