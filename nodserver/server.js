@@ -159,6 +159,33 @@ app.get('/tbl_media/:id', (req, res) => {
   });
 });
 
+app.get('/media', (req, res) => {
+  const query = 'SELECT * FROM tbl_media';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Medien:', err);
+      res.status(500).send(err);
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.post('/media-tracking', (req, res) => {
+  const { mediaID, userID, goal_type, goal_description, progress } = req.body;
+  const query = `INSERT INTO tbl_media_tracking 
+                 (mediaID, userID, goal_type, goal_description, progressDate, progress) 
+                 VALUES (?, ?, ?, ?, CURDATE(), ?)`;
+  db.query(query, [mediaID, userID, goal_type, goal_description, progress], (err, result) => {
+    if (err) {
+      console.error('Fehler beim Eintragen der Tracking-Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Eintragen der Tracking-Daten.' });
+      return;
+    }
+    res.status(200).json({ message: 'Tracking-Daten erfolgreich eingetragen.' });
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
 });});

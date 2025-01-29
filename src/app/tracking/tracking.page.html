@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Tracking</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tracking</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item>
+    <ion-label>Medium auswählen</ion-label>
+    <ion-select [(ngModel)]="selectedMedium">
+      <ion-select-option *ngFor="let medium of mediaList" [value]="medium.mediaID">
+        {{ medium.mediaName }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Seiten/Zeit pro Woche</ion-label>
+    <ion-input [(ngModel)]="progress" type="number"></ion-input>
+  </ion-item>
+
+  <ion-button (click)="saveGoals()">Ziele speichern</ion-button>
+
+</ion-content>
