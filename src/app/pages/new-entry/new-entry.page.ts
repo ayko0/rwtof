@@ -65,6 +65,7 @@ export class NewEntryPage implements OnInit {
       formData.append('img', this.media.img);
     } else {
       console.error('Kein Bild ausgewählt');
+      alert('Bitte wähle ein Bild aus.');
       return;
     }
 
