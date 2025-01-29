@@ -13,16 +13,30 @@ import { FormsModule } from '@angular/forms';
   imports: [IonButton, IonItem, IonLabel, IonContent, IonHeader, IonTitle, CommonModule, FormsModule]
 })
 export class UserprofilePage implements OnInit {
-  username: string = '';
+  userId: string='';
+  username: string='';
+  email: string='';
+
   constructor(private authService: AuthService, private router: Router) {}
+
   ngOnInit() {
-    this.loadProfile();
+    this.userId = localStorage.getItem('userId') || '';
+    this.username = localStorage.getItem('username') || '';
+    this.email = localStorage.getItem('email') || '';
+
+    if (!this.userId || !this.username|| !this.email) {
+      this.router.navigate(['/login']);
+    } else {
+      this.loadProfile();
+    }
   }
+
   loadProfile() {
-    const userId = localStorage.getItem('userId');
+    const userId = Number(this.userId);
     if (userId) {
-      this.authService.getProfile(Number(userId)).subscribe(response => {
+      this.authService.getProfile(userId).subscribe(response => {
         this.username = response.user.username;
+        this.email = response.user.email;
       }, error => {
         console.error('Fehler beim Abrufen der Benutzerdaten:', error);
       });
@@ -30,9 +44,15 @@ export class UserprofilePage implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+
   logout() {
     localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/landing']);
+  }
+  home() {
+    this.router.navigate(['/home']);
   }
 }

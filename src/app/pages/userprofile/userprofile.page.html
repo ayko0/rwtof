@@ -1,8 +1,17 @@
-<ion-content [fullscreen]="true">
+<ion-content>
   <div class="container">
-    <ion-item>
-      <ion-label>Benutzername: {{ username }}</ion-label>
-    </ion-item>
-    <ion-button (click)="logout()" expand="full">Abmelden</ion-button>
+    <div class="profile-header">
+      <div class="profile-picture-container"><img src="assets/profilepicture.png" class="profile-picture" alt="Profilbild"></div>
+      <div class="data">
+        <ion-item lines="none">
+          <ion-label>
+            <h2>Benutzername: {{username}}</h2>
+            <p>Email: {{ email }}</p>
+          </ion-label>
+        </ion-item>
+      </div>
+    </div>
+    <ion-button (click)="logout()" class="logout" expand="full">Logout</ion-button>
+    <ion-button (click)="home()" class="home" expand="full">Home</ion-button>
   </div>
 </ion-content>

@@ -37,8 +37,21 @@ export class LoginPage {
 
     this.authService.login({ username: this.username, password: this.password }).subscribe(async (response) => {
       console.log(response);
-      localStorage.setItem('userId', response.user.id);
-      this.router.navigate(['/profile']);
+      // Überprüfen, ob die response.id und response.username vorhanden sind
+      if (response && response.id && response.username) {
+        localStorage.setItem('userId', response.id.toString());
+        localStorage.setItem('username', response.username);
+        localStorage.setItem('email', response.email);
+        this.router.navigate(['/userprofile']);
+      } else {
+        console.error('Login-Fehler: Benutzer-ID oder Benutzername nicht gefunden.');
+        const alert = await this.alertController.create({
+          header: 'Login fehlgeschlagen',
+          message: 'Benutzername nicht gefunden.',
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
     }, async (error: any) => {
       console.error('Login-Fehler:', error);
       const alert = await this.alertController.create({
@@ -47,6 +60,6 @@ export class LoginPage {
         buttons: ['OK']
       });
       await alert.present();
-    });
+    });    
   }
 }
