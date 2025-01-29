@@ -28,7 +28,7 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) {
-    console.error('Fehler bei der Verbindung zur Datenbank:', err.stack);
+    console.error('Fehler bei der Verbindung zur Datenbank:', err);
     return;
   }
   console.log('Verbunden mit der Datenbank');
@@ -77,6 +77,9 @@ app.post('/tbl_media', (req, res) => {
 
   const query = 'INSERT INTO tbl_media (name, type, genre, img) VALUES (?, ?, ?, ?)';
   db.query(query, [name, type, genre, Buffer.from(img)], (err, result) => {
+  const { username, password } = req.body;
+  const query = 'SELECT userID, email, username, password FROM tbl_user WHERE username = ?';
+  db.query(query, [username], (err, results) => {
     if (err) {
       console.error('Fehler beim Eintragen der Media-Daten:', err);
       res.status(500).json({ message: 'Fehler beim Eintragen der Media-Daten.' });
@@ -111,7 +114,7 @@ app.post('/login', (req, res) => {
         res.status(401).json({ message: 'Falsches Passwort.' });
         return;
       }
-      res.status(200).json({ message: 'Login erfolgreich.', id: user.userID, username: user.username , email: user.email});
+      res.status(200).json({ message: 'Login erfolgreich.', id: user.userID, username: user.username , email: user.email });
     });
   });
 });
@@ -167,3 +170,4 @@ app.post('/media-tracking', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
 });
+
