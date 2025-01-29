@@ -28,7 +28,7 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) {
-    console.error('Fehler bei der Verbindung zur Datenbank:', err.stack);
+    console.error('Fehler bei der Verbindung zur Datenbank:', err);
     return;
   }
   console.log('Verbunden mit der Datenbank');
@@ -75,35 +75,16 @@ app.post('/tbl_media', (req, res) => {
   console.log('Hochgeladene Datei:', req.files.img);
 
   const query = 'INSERT INTO tbl_media (name, type, genre, img) VALUES (?, ?, ?, ?)';
-  db.query(query, [name, type, genre, Buffer.from(img)], (err, result) => {
-  const { username, password } = req.body;
-  const query = 'SELECT userID, email, username, password FROM tbl_user WHERE username = ?';
-  db.query(query, [username], (err, results) => {
+  db.query(query, [name, type, genre, img], (err, result) => {
     if (err) {
       console.error('Fehler beim Eintragen der Media-Daten:', err);
       res.status(500).json({ message: 'Fehler beim Eintragen der Media-Daten.' });
       return;
     }
     res.status(200).json({ message: 'Media-Daten erfolgreich eingetragen.' });
-    if (results.length === 0) {
-      res.status(401).json({ message: 'Benutzername nicht gefunden.' });
-      return;
-    }
-    const user = results[0];
-    bcrypt.compare(password, user.password, (err, isMatch) => {
-      if (err) {
-        console.error('Fehler beim Vergleichen der Passwörter:', err);
-        res.status(500).json({ message: 'Fehler beim Vergleichen der Passwörter.' });
-        return;
-      }
-      if (!isMatch) {
-        res.status(401).json({ message: 'Falsches Passwort.' });
-        return;
-      }
-      res.status(200).json({ message: 'Login erfolgreich.', id: user.userID, username: user.username , email: user.email});
-    });
   });
 });
+
 app.post('/login', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
   const { username, password } = req.body;
@@ -129,11 +110,10 @@ app.post('/login', (req, res) => {
         res.status(401).json({ message: 'Falsches Passwort.' });
         return;
       }
-      res.status(200).json({ message: 'Login erfolgreich.', id: user.userID, username: user.username , email: user.email});
+      res.status(200).json({ message: 'Login erfolgreich.', id: user.userID, username: user.username , email: user.email });
     });
   });
 });
-
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
-});});
+});
