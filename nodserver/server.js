@@ -77,9 +77,6 @@ app.post('/tbl_media', (req, res) => {
 
   const query = 'INSERT INTO tbl_media (name, type, genre, img) VALUES (?, ?, ?, ?)';
   db.query(query, [name, type, genre, Buffer.from(img)], (err, result) => {
-  const { username, password } = req.body;
-  const query = 'SELECT userID, email, username, password FROM tbl_user WHERE username = ?';
-  db.query(query, [username], (err, results) => {
     if (err) {
       console.error('Fehler beim Eintragen der Media-Daten:', err);
       res.status(500).json({ message: 'Fehler beim Eintragen der Media-Daten.' });
@@ -170,4 +167,3 @@ app.post('/media-tracking', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
 });
-
