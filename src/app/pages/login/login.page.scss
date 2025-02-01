@@ -18,7 +18,6 @@ ion-content {
     margin-top:110px;
     animation: fadeIn 2s ease;
   }
-  
   .logo img {
     width: 120px;
     height: auto;
@@ -113,6 +112,7 @@ ion-content {
   .additional-links {
     margin-top: 20px;
     text-align: center;
+    font-size: 17px;
   }
   
   .additional-links a {
@@ -125,5 +125,12 @@ ion-content {
   .additional-links a:hover {
     color: #ffb6c1;
     text-decoration: underline;
+  }
+  .links{
+    color: #87cefa;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 17px;
   }
   

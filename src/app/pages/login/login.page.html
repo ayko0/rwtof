@@ -10,7 +10,7 @@
     <form (ngSubmit)="login()">
       <div class="data">
         <ion-item class="user">
-          <ion-input placeholder="Email address" [(ngModel)]="username" name="user" type="email"></ion-input>
+          <ion-input placeholder="Username" [(ngModel)]="username" name="user" type="email"></ion-input>
           <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
         </ion-item>
         <ion-item class="pass">
@@ -21,8 +21,8 @@
       <ion-button type="submit" class="btnlogin">Login</ion-button>
     </form>
     <div class="additional-links">
+      <p class="links">Don't have an account?</p> 
       <a [routerLink]="['/signup']">Sign up</a>
-      <a [routerLink]="['/resetpassword']">Forgot Password?</a>
     </div>
   </div>
 </ion-content>

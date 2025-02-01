@@ -42,7 +42,7 @@ export class LoginPage {
         localStorage.setItem('userId', response.id.toString());
         localStorage.setItem('username', response.username);
         localStorage.setItem('email', response.email);
-        this.router.navigate(['/userprofile']);
+        this.router.navigate(['/home']);
       } else {
         console.error('Login-Fehler: Benutzer-ID oder Benutzername nicht gefunden.');
         const alert = await this.alertController.create({
