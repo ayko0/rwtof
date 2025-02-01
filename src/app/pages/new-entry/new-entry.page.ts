@@ -48,7 +48,7 @@ export class NewEntryPage implements OnInit {
 
   onFileChange(event: any){
     if (event.target.files && event.target.files.length > 0){
-    this.media.img = event.target.files[0];
+      this.media.img = event.target.files[0];
     } else {
       this.media.img = null;
     }
@@ -71,7 +71,8 @@ export class NewEntryPage implements OnInit {
 
     this.http.post('http://localhost:3000/tbl_media', formData).subscribe(response => {
       console.log('Media Eintrag erfolgreich:', response);
-      this.navCtrl.navigateRoot('/');
+      // Kommentiere die Navigation zur Homepage aus, um auf der selben Seite zu bleiben
+      // this.navCtrl.navigateRoot('/');
     }, error => {
       console.error('Fehler beim Speichern des Media Eintrags:', error.error || error);
       const errMsg = error.error ? error.error.message : error.statusText;
@@ -79,4 +80,3 @@ export class NewEntryPage implements OnInit {
     });
   }
 }
-  

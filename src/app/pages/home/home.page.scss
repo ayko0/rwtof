@@ -15,28 +15,26 @@ ion-content {
   display: flex;
   justify-content: center;
   margin: 20px 0;
-  margin-top: 110px;
   animation: fadeIn 2s ease;
 }
 
 .logo img {
+  margin-top: 110px;
   width: 120px;
   height: auto;
 }
 
-.titel {
-  font-size: 2em;
-  color: #cdc3c4;
+.app-name {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 0px;
+  animation: fadeIn 1.5s ease;
 }
 
-.subtitle {
-  font-size: 1.2em;
-  color: #87cefa;
-  text-align: center;
-  margin-bottom: 10px;
-  margin-top: 7px;
+.app-name h1 {
+  font-size: 2.4em;
+  color: #cdc3c4;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Schatten hinzugefügt */
 }
 
 .container {
@@ -46,25 +44,21 @@ ion-content {
   justify-content: center;
   height: 55vh;
   padding: 0 20px;
+  animation: fadeIn 2s ease 1s;
 }
 
-.button-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-button {
-  background: #87cefa;
-  color: #ffffff;
-  margin: 10px;
-  padding: 10px 20px;
-  border: none;
+.btn {
+  --background: #87cefa;
+  --color: #ffffff;
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
   border-radius: 5px;
-  font-size: 1em;
   transition: background 0.3s ease;
 }
 
-button:hover {
+.btn:hover {
   background: #ffb6c1;
 }
+
+

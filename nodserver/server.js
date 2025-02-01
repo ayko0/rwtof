@@ -101,26 +101,21 @@ app.post('/tbl_media', (req, res) => {
   });
 });
 
-app.get('/tbl_media/:id', (req, res) => {
-  const mediaId = req.params.id;
-  const query = 'SELECT img FROM tbl_media WHERE id = ?';
-  db.query(query, [mediaId], (err, result) => {
+app.get('/tbl_media', (req, res) => {
+  const mediaType = req.query.type;
+  console.log('Anfrage für Medien des Typs:', mediaType);
+  const query = 'SELECT img, name FROM tbl_media WHERE type = ?';
+  db.query(query, [mediaType], (err, results) => {
     if (err) {
-      console.error('Fehler beim Abrufen der Bilddaten:', err);
-      return res.status(500).json({ message: 'Fehler beim Abrufen der Bilddaten.' });
-    }
-    
-    if (result.length === 0) {
-      return res.status(404).json({ message: 'Bild nicht gefunden.' });
+      console.error('Fehler beim Abrufen der Mediendaten:', err);
+      return res.status(500).json({ message: 'Fehler beim Abrufen der Mediendaten.' });
     }
 
-    const img = result[0].img;  // Binärdaten des Bildes
-
-    // Setzen Sie den Header, um den Bildinhalt korrekt zu senden
-    res.setHeader('Content-Type', 'image/png');
-    res.send(img);
+    console.log('Erhaltene Daten:', results);
+    res.json(results);
   });
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);

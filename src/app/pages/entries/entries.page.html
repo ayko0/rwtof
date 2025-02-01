@@ -5,12 +5,41 @@
     </ion-toolbar>
   </ion-header>
 
+  <div class="logo">
+    <img src="assets/animal.png" alt="Logo">
+  </div>
+
   <div class="container">
     <ion-item>
-      <ion-label position="floating">Bild-ID</ion-label>
-      <ion-input type="number" [(ngModel)]="imageId" (ionChange)="onImageIdChange($event)"></ion-input>
+      <ion-label position="floating">Typ</ion-label>
+      <ion-select [(ngModel)]="selectedType" (ionChange)="onTypeChange($event)" [placeholder]="selectedTypeName">
+        <ion-select-option value="1">Buch</ion-select-option>
+        <ion-select-option value="2">Serie</ion-select-option>
+        <ion-select-option value="3">Film</ion-select-option>
+      </ion-select>
     </ion-item>
-    <ion-button (click)="loadImage()">Bild laden</ion-button>
-    <img [src]="imgURL" *ngIf="imgURL" alt="Media Image">
+
+    <ion-button (click)="loadEntries()">Einträge laden</ion-button>
+
+    <div class="data">
+      <table>
+        <thead>
+          <tr>
+            <th>Bild</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entry of entries">
+            <td><img [src]="entry.imgURL" alt="Media Image"></td>
+            <td>{{ entry.name }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </ion-content>
+
+
+
+

@@ -9,16 +9,21 @@
     <div class="logo">
       <img src="assets/animal.png" alt="Logo">
     </div>
+    <div class="app-name">
+      <h1>RWT - Read. Watch. Track.</h1>
+    </div>
     <div class="button-container">
-      <ion-button [routerLink]="['/new-entry']">
+      <ion-button [routerLink]="['/new-entry']" class="btn">
         <p>New-Entry</p>
-        </ion-button>
-        <ion-button [routerLink]="['/userprofile']">
+      </ion-button>
+      <ion-button [routerLink]="['/userprofile']" class="btn">
         <p>Profile</p>
-        </ion-button>
-        <ion-button [routerLink]="['/entries']">
+      </ion-button>
+      <ion-button [routerLink]="['/entries']" class="btn">
         <p>All Entries</p>
-        </ion-button>
+      </ion-button>
     </div>
   </div>
 </ion-content>
+
+
