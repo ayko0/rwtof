@@ -18,10 +18,13 @@ ion-img {
   transform: translate(-50%, -50%);
 }
 ion-button {
-  --background: #87cefa;
+  --background: #FBB3DA;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   height: 50px;
   width: 300px;
+}
+ion-button:hover {
+  --background: #A8E5E3;
 }
 .center {
   margin: 0;
@@ -36,7 +39,7 @@ ion-icon {
   color: #582031;
 }
 p{
-  color: #e4d6d6;
+  color: #746e6d;
   font-size: 20px;
   line-height: 25px;
   margin: 0;
