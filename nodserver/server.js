@@ -28,7 +28,7 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) {
-    console.error('Fehler bei der Verbindung zur Datenbank:', err);
+    console.error('Fehler bei der Verbindung zur Datenbank:', err.stack);
     return;
   }
   console.log('Verbunden mit der Datenbank');
@@ -71,47 +71,32 @@ app.post('/tbl_media', (req, res) => {
   }
 
   const img = req.files.img.data;
-
   console.log('Empfangene Daten:', { name, type, genre });
   console.log('Hochgeladene Datei:', req.files.img);
 
-  const query = 'INSERT INTO tbl_media (name, type, genre, img) VALUES (?, ?, ?, ?)';
-  db.query(query, [name, type, genre, Buffer.from(img)], (err, result) => {
+  // Holen Sie die Genre-ID basierend auf dem Genre-Namen ab
+  const getGenreIdQuery = 'SELECT id FROM tbl_genre WHERE name = ?';
+  db.query(getGenreIdQuery, [genre], (err, genreResult) => {
     if (err) {
-      console.error('Fehler beim Eintragen der Media-Daten:', err);
-      res.status(500).json({ message: 'Fehler beim Eintragen der Media-Daten.' });
+      console.error('Fehler beim Abrufen der Genre-ID:', err);
+      res.status(500).json({ message: 'Fehler beim Abrufen der Genre-ID.' });
       return;
     }
-    res.status(200).json({ message: 'Media-Daten erfolgreich eingetragen.' });
-  });
-});
 
-app.post('/login', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
-  const { username, password } = req.body;
-  const query = 'SELECT userID, email, username, password FROM tbl_user WHERE username = ?';
-  db.query(query, [username], (err, results) => {
-    if (err) {
-      console.error('Fehler beim Abrufen der Daten:', err);
-      res.status(500).json({ message: 'Fehler beim Abrufen der Daten.' });
-      return;
+    if (genreResult.length === 0) {
+      return res.status(404).json({ message: 'Genre nicht gefunden.' });
     }
-    if (results.length === 0) {
-      res.status(401).json({ message: 'Benutzername nicht gefunden.' });
-      return;
-    }
-    const user = results[0];
-    bcrypt.compare(password, user.password, (err, isMatch) => {
+
+    const genreId = genreResult[0].id;
+
+    const query = 'INSERT INTO tbl_media (name, type, genre, img) VALUES (?, ?, ?, ?)';
+    db.query(query, [name, type, genreId, Buffer.from(img)], (err, result) => {
       if (err) {
-        console.error('Fehler beim Vergleichen der Passwörter:', err);
-        res.status(500).json({ message: 'Fehler beim Vergleichen der Passwörter.' });
+        console.error('Fehler beim Eintragen der Media-Daten:', err);
+        res.status(500).json({ message: 'Fehler beim Eintragen der Media-Daten.' });
         return;
       }
-      if (!isMatch) {
-        res.status(401).json({ message: 'Falsches Passwort.' });
-        return;
-      }
-      res.status(200).json({ message: 'Login erfolgreich.', id: user.userID, username: user.username , email: user.email });
+      res.status(200).json({ message: 'Media-Daten erfolgreich eingetragen.' });
     });
   });
 });
@@ -134,33 +119,6 @@ app.get('/tbl_media/:id', (req, res) => {
     // Setzen Sie den Header, um den Bildinhalt korrekt zu senden
     res.setHeader('Content-Type', 'image/png');
     res.send(img);
-  });
-});
-
-app.get('/media', (req, res) => {
-  const query = 'SELECT * FROM tbl_media';
-  db.query(query, (err, results) => {
-    if (err) {
-      console.error('Fehler beim Abrufen der Medien:', err);
-      res.status(500).send(err);
-      return;
-    }
-    res.json(results);
-  });
-});
-
-app.post('/media-tracking', (req, res) => {
-  const { mediaID, userID, goal_type, goal_description, progress } = req.body;
-  const query = `INSERT INTO tbl_media_tracking 
-                 (mediaID, userID, goal_type, goal_description, progressDate, progress) 
-                 VALUES (?, ?, ?, ?, CURDATE(), ?)`;
-  db.query(query, [mediaID, userID, goal_type, goal_description, progress], (err, result) => {
-    if (err) {
-      console.error('Fehler beim Eintragen der Tracking-Daten:', err);
-      res.status(500).json({ message: 'Fehler beim Eintragen der Tracking-Daten.' });
-      return;
-    }
-    res.status(200).json({ message: 'Tracking-Daten erfolgreich eingetragen.' });
   });
 });
 
