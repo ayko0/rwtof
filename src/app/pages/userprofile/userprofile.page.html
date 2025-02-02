@@ -1,19 +1,18 @@
 <ion-content>
-  <div class="container">
-    <div class="profile-header">
-      <div class="profile-picture-container">
-        <img [src]="selectedPicture" class="profile-picture" alt="Profilbild" (click)="togglePicture()">
-      </div>
-      <div class="data">
-        <ion-item lines="none">
-          <ion-label>
-            <h2>Benutzername: {{username}}</h2>
-            <p>Email: {{ email }}</p>
-          </ion-label>
-        </ion-item>
-      </div>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Benutzerprofil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="profile-container">
+    <img [src]="selectedPicture" class="profile-picture" alt="Profilbild" (click)="togglePicture()">
+    <div class="profile-details">
+      <h2>{{ username }}</h2>
+      <p>{{ email }}</p>
     </div>
-    <ion-button (click)="logout()" class="logout" expand="full">Logout</ion-button>
-    <ion-button (click)="home()" class="home" expand="full">Home</ion-button>
+    <ion-button (click)="logout()">Abmelden</ion-button>
+    <ion-button (click)="home()">Home</ion-button>
   </div>
 </ion-content>
+

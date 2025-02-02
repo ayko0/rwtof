@@ -3,22 +3,25 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonSelect, IonSelectOption, IonTextarea, IonModal, IonButtons } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-tracking',
   templateUrl: './tracking.page.html',
   styleUrls: ['./tracking.page.scss'],
   standalone: true,
-  imports: [IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonSelect, IonSelectOption, CommonModule, FormsModule]
+  imports: [IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonSelect, IonSelectOption, IonTextarea, IonModal, IonButtons, CommonModule, FormsModule]
 })
 export class TrackingPage implements OnInit {
   media = {
     type: '',
-    genre: 0 as number // Ändere den Typ zu Zahl
+    genre: 0 as number, // Ändere den Typ zu Zahl
+    comments: '' // Kommentar als String hinzufügen
   };
 
   mediaList: any[] = [];
+  isTrackModalOpen = false; // Modal-Status
+  selectedMediaID: number = 0; // Initialisiere mit 0, um null zu vermeiden
 
   genres: { [key: string]: { id: number; name: string }[] } = { 
     '1': [{ id: 1, name: 'Fantasy' }, { id: 2, name: 'Science-Fiction' }, { id: 3, name: 'Krimi' }, { id: 4, name: 'Historischer Roman' }, { id: 5, name: 'Horror' }, { id: 6, name: 'Abenteuer' }, { id: 7, name: 'Liebesroman' }],
@@ -66,24 +69,30 @@ export class TrackingPage implements OnInit {
         console.error('Fehler beim Laden der Einträge:', error);
       });
   }
-  
 
-  trackMedia(mediaID: number) {
+  openTrackMediaModal(mediaID: number) {
+    this.selectedMediaID = mediaID;
+    this.isTrackModalOpen = true;
+  }
+
+  trackMedia() {
     const trackData = {
-      mediaID,
-      userID: 1, // Beispiel User-ID
+      mediaID: this.selectedMediaID,
+      userID: 17, // Beispiel User-ID
       type: this.selectedType,
       genre: this.selectedGenre,
-      finished: 0, // Standardwert für unfertig
-      comments: ''
+      finished: 0,
+      comments: this.media.comments // Kommentar hinzufügen
     };
 
     // POST-Request senden
     this.http.post('http://localhost:3000/tbl_tracked', trackData)
       .subscribe(response => {
         console.log('Medium erfolgreich getrackt:', response);
+        this.isTrackModalOpen = false; // Modal schließen
       }, error => {
         console.error('Fehler beim Tracken des Mediums:', error);
       });
   }
 }
+

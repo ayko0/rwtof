@@ -99,7 +99,9 @@ export class UserprofilePage implements OnInit {
     this.router.navigate(['/landing']);
   }
   
+  
   home() {
     this.router.navigate(['/home']);
   }
 }
+

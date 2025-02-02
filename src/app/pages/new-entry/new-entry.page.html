@@ -34,7 +34,7 @@
         <ion-label position="floating">Image</ion-label>
         <input type="file" (change)="onFileChange($event)" required />
       </ion-item>
-      <ion-button expand="full" type="submit" [disabled]="!mediaForm.form.valid">Speichern</ion-button>
+      <ion-button expand="full" type="submit" [disabled]="!mediaForm.form.valid" class="btn">Speichern</ion-button>
     </form>
     <ion-button [routerLink]="['/home']" class="btn">
       <p>Homepage</p>
