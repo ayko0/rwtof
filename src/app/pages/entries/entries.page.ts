@@ -14,45 +14,51 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonInpu
 })
 export class EntriesPage implements OnInit {
 
-  selectedType: number = 1;  // Standardmäßig auf 1 (Buch) gesetzt
+  media = {
+    type: '',
+    genre: 0 as number // Ändere den Typ zu Zahl
+  };
+
   entries: any[] = [];
-  selectedTypeName: string = 'Buch';
+  genres: { [key: string]: { id: number; name: string }[] } = { 
+    '1': [{ id: 1, name: 'Fantasy' }, { id: 2, name: 'Science-Fiction' }, { id: 3, name: 'Krimi' }, { id: 4, name: 'Historischer Roman' }, { id: 5, name: 'Horror' }, { id: 6, name: 'Abenteuer' }, { id: 7, name: 'Liebesroman' }],
+    '2': [{ id: 8, name: 'Drama' }, { id: 9, name: 'Komödie' }, { id: 10, name: 'Thriller' }, { id: 11, name: 'Mystery' }, { id: 12, name: 'Dokumentation' }, { id: 13, name: 'Animation' }, { id: 14, name: 'Reality-TV' }],
+    '3': [{ id: 15, name: 'Action' }, { id: 16, name: 'Abenteuer' }, { id: 17, name: 'Komödie' }, { id: 18, name: 'Drama' }, { id: 19, name: 'Horror' }, { id: 20, name: 'Musical' }, { id: 21, name: 'Science-Fiction' }]
+  };
+
+  availableGenres: { id: number; name: string }[] = [];
+  selectedType: number | null = null;
+  selectedGenre: number | null = null;
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
-  ngOnInit() {
-    this.loadEntries();
+  ngOnInit() {}
+
+  onTypeChange(event: any) {
+    const selectedType = event.detail.value;
+    if (selectedType) {
+      this.availableGenres = this.genres[selectedType];
+      this.media.genre = 0;  // Initialisiere Genre als Integer
+    } else {
+      this.availableGenres = [];
+      this.media.genre = 0;  // Initialisiere Genre als Integer
+    }
   }
 
   loadEntries() {
-    console.log(`Lade Einträge vom Typ ${this.selectedType}`);
-    this.http.get<any[]>(`http://localhost:3000/tbl_media?type=${this.selectedType}`)
+    const params: any = { type: this.media.type, genre: this.media.genre };
+    this.http.get<any[]>('http://localhost:3000/tbl_media', { params })
       .subscribe(data => {
-        console.log('Erhaltene Daten:', data);
         this.entries = data.map(entry => ({
-          imgURL: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(new Blob([entry.img], { type: 'image/png' }))),
+          imgURL: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(new Blob([new Uint8Array(entry.img.data)], { type: 'image/png' }))),
           name: entry.name
         }));
-        console.log('Verarbeitete Einträge:', this.entries);
       }, error => {
         console.error('Fehler beim Laden der Einträge:', error);
       });
   }
-
-  onTypeChange(event: any) {
-    this.selectedType = event.detail.value;
-    this.selectedTypeName = this.getTypeName(this.selectedType);
-    console.log('Ausgewählter Typ geändert:', this.selectedTypeName);
-  }
-
-  getTypeName(type: number): string {
-    switch (type) {
-      case 1: return 'Buch';
-      case 2: return 'Serie';
-      case 3: return 'Film';
-      default: return 'Unbekannt';
-    }
-  }
 }
+
+
 
 

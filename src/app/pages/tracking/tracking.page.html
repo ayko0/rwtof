@@ -9,10 +9,14 @@
     <div class="logo">
       <img src="assets/animal.png" alt="Logo">
     </div>
+    <div class="description">
+      <h2>Was möchtest du tracken?</h2>
+      <h3>Wähle eine Kategorie aus</h3>
+    </div>
     <form (ngSubmit)="onSubmit($event)" #filterForm="ngForm" class="form-container">
       <ion-item>
         <ion-label position="floating">Typ auswählen</ion-label>
-        <ion-select [(ngModel)]="selectedType" name="type" required (ionChange)="onTypeChange($event)">
+        <ion-select [(ngModel)]="media.type" name="type" required (ionChange)="onTypeChange($event)">
           <ion-select-option value="1">Buch</ion-select-option>
           <ion-select-option value="2">Serie</ion-select-option>
           <ion-select-option value="3">Film</ion-select-option>
@@ -20,7 +24,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Genre auswählen</ion-label>
-        <ion-select [(ngModel)]="selectedGenre" name="genre" required [disabled]="!availableGenres.length">
+        <ion-select [(ngModel)]="media.genre" name="genre" required [disabled]="!availableGenres.length">
           <ion-select-option *ngFor="let genre of availableGenres" [value]="genre.id">{{ genre.name }}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -38,7 +42,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let medium of filteredMediaList">
-            <td><img [src]="medium.imgURL" alt="Media Image"></td>
+            <td><img [src]="medium.imgURL" alt="Media Image" class="small-image"></td>
             <td>{{ medium.name }}</td>
             <td><ion-button (click)="trackMedia(medium.mediaID)">Tracken</ion-button></td>
           </tr>
@@ -47,6 +51,7 @@
     </div>
   </div>
 </ion-content>
+
 
 
 

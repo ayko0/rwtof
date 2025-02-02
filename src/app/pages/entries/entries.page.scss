@@ -106,7 +106,11 @@ ion-button:hover {
   --background: #ffb6c1;
 }
 
-
+.small-image {
+  width: 100px;
+  height: 140px;
+  object-fit: cover;
+}
 
 
 

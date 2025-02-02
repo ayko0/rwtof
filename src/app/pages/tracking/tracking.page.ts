@@ -13,33 +13,21 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButt
   imports: [IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonSelect, IonSelectOption, CommonModule, FormsModule]
 })
 export class TrackingPage implements OnInit {
+  media = {
+    type: '',
+    genre: 0 as number // Ändere den Typ zu Zahl
+  };
 
   mediaList: any[] = [];
-  genres: any[] = [
-    { id: 1, name: 'Fantasy', type: 1 },
-    { id: 2, name: 'Science-Fiction', type: 1 },
-    { id: 3, name: 'Krimi', type: 1 },
-    { id: 4, name: 'Historischer Roman', type: 1 },
-    { id: 5, name: 'Horror', type: 1 },
-    { id: 6, name: 'Abenteuer', type: 1 },
-    { id: 7, name: 'Liebesroman', type: 1 },
-    { id: 8, name: 'Drama', type: 2 },
-    { id: 9, name: 'Komödie', type: 2 },
-    { id: 10, name: 'Thriller', type: 2 },
-    { id: 11, name: 'Mystery', type: 2 },
-    { id: 12, name: 'Dokumentation', type: 2 },
-    { id: 13, name: 'Animation', type: 2 },
-    { id: 14, name: 'Reality-TV', type: 2 },
-    { id: 15, name: 'Action', type: 3 },
-    { id: 16, name: 'Abenteuer', type: 3 },
-    { id: 17, name: 'Komödie', type: 3 },
-    { id: 18, name: 'Drama', type: 3 },
-    { id: 19, name: 'Horror', type: 3 },
-    { id: 20, name: 'Musical', type: 3 },
-    { id: 21, name: 'Science-Fiction', type: 3 }
-  ];
+
+  genres: { [key: string]: { id: number; name: string }[] } = { 
+    '1': [{ id: 1, name: 'Fantasy' }, { id: 2, name: 'Science-Fiction' }, { id: 3, name: 'Krimi' }, { id: 4, name: 'Historischer Roman' }, { id: 5, name: 'Horror' }, { id: 6, name: 'Abenteuer' }, { id: 7, name: 'Liebesroman' }],
+    '2': [{ id: 8, name: 'Drama' }, { id: 9, name: 'Komödie' }, { id: 10, name: 'Thriller' }, { id: 11, name: 'Mystery' }, { id: 12, name: 'Dokumentation' }, { id: 13, name: 'Animation' }, { id: 14, name: 'Reality-TV' }],
+    '3': [{ id: 15, name: 'Action' }, { id: 16, name: 'Abenteuer' }, { id: 17, name: 'Komödie' }, { id: 18, name: 'Drama' }, { id: 19, name: 'Horror' }, { id: 20, name: 'Musical' }, { id: 21, name: 'Science-Fiction' }]
+  };
+
+  availableGenres: { id: number; name: string }[] = [];
   filteredMediaList: any[] = [];
-  availableGenres: any[] = [];
   selectedType: number | null = null;
   selectedGenre: number | null = null;
 
@@ -48,33 +36,37 @@ export class TrackingPage implements OnInit {
   ngOnInit() {}
 
   onTypeChange(event: any) {
-    this.selectedType = event.detail.value;
-    this.availableGenres = this.genres.filter(genre => genre.type === this.selectedType);
-    this.selectedGenre = null;
-    this.filteredMediaList = [];
+    const selectedType = event.detail.value;
+    if (selectedType) {
+      this.availableGenres = this.genres[selectedType];
+      this.media.genre = 0;  // Initialisiere Genre als Integer
+    } else {
+      this.availableGenres = [];
+      this.media.genre = 0;  // Initialisiere Genre als Integer
+    }
   }
 
   onSubmit(event: Event) {
     event.preventDefault();
+    this.selectedType = this.media.type ? parseInt(this.media.type) : null;
+    this.selectedGenre = this.media.genre ? parseInt(String(this.media.genre)) : null;
     this.loadMediaList();
   }
 
   loadMediaList() {
-    const params: any = { type: this.selectedType };
-    if (this.selectedGenre) {
-      params.genre = this.selectedGenre;
-    }
+    const params: any = { type: this.selectedType, genre: this.selectedGenre };
     this.http.get<any[]>('http://localhost:3000/tbl_media', { params })
       .subscribe(data => {
         this.filteredMediaList = data.map(entry => ({
-          imgURL: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(new Blob([entry.img], { type: 'image/png' }))),
+          imgURL: this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(new Blob([new Uint8Array(entry.img.data)], { type: 'image/png' }))),
           name: entry.name,
-          mediaID: entry.mediaID
+          mediaID: entry.id
         }));
       }, error => {
         console.error('Fehler beim Laden der Einträge:', error);
       });
   }
+  
 
   trackMedia(mediaID: number) {
     const trackData = {
@@ -86,6 +78,7 @@ export class TrackingPage implements OnInit {
       comments: ''
     };
 
+    // POST-Request senden
     this.http.post('http://localhost:3000/tbl_tracked', trackData)
       .subscribe(response => {
         console.log('Medium erfolgreich getrackt:', response);
@@ -94,4 +87,3 @@ export class TrackingPage implements OnInit {
       });
   }
 }
-

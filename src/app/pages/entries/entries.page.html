@@ -10,18 +10,25 @@
   </div>
 
   <div class="container">
-    <ion-item>
-      <ion-label position="floating">Typ</ion-label>
-      <ion-select [(ngModel)]="selectedType" (ionChange)="onTypeChange($event)" [placeholder]="selectedTypeName">
-        <ion-select-option value="1">Buch</ion-select-option>
-        <ion-select-option value="2">Serie</ion-select-option>
-        <ion-select-option value="3">Film</ion-select-option>
-      </ion-select>
-    </ion-item>
+    <form #filterForm="ngForm" (ngSubmit)="loadEntries()">
+      <ion-item>
+        <ion-label position="floating">Typ auswählen</ion-label>
+        <ion-select [(ngModel)]="media.type" name="type" required (ionChange)="onTypeChange($event)">
+          <ion-select-option value="1">Buch</ion-select-option>
+          <ion-select-option value="2">Serie</ion-select-option>
+          <ion-select-option value="3">Film</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Genre auswählen</ion-label>
+        <ion-select [(ngModel)]="media.genre" name="genre" required [disabled]="!availableGenres.length">
+          <ion-select-option *ngFor="let genre of availableGenres" [value]="genre.id">{{ genre.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-button expand="full" type="submit" [disabled]="!filterForm.form.valid">Filtern</ion-button>
+    </form>
 
-    <ion-button (click)="loadEntries()">Einträge laden</ion-button>
-
-    <div class="data">
+    <div class="data" *ngIf="entries.length > 0">
       <table>
         <thead>
           <tr>
@@ -31,7 +38,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let entry of entries">
-            <td><img [src]="entry.imgURL" alt="Media Image"></td>
+            <td><img [src]="entry.imgURL" alt="Media Image" class="small-image"></td>
             <td>{{ entry.name }}</td>
           </tr>
         </tbody>
@@ -39,7 +46,4 @@
     </div>
   </div>
 </ion-content>
-
-
-
 

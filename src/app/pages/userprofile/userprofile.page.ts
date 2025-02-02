@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
   imports: [IonButton, IonItem, IonLabel, IonContent, IonHeader, IonTitle, CommonModule, FormsModule]
 })
 export class UserprofilePage implements OnInit {
+  
   userId: string='';
   username: string='';
   email: string='';
