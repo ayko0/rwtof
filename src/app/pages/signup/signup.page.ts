@@ -29,7 +29,7 @@ export class SignupPage {
 
     this.authService.signup(signupData).subscribe(response => {
       console.log(response);
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
     }, (error: any) => {
       console.error('Signup error:', error);
       if (error.status === 500) {

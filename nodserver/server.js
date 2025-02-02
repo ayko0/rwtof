@@ -43,21 +43,6 @@ app.use(fileUpload({
   tempFileDir: '/tmp/'
 }));
 
-app.post('/signup', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
-  const { email, name, password } = req.body;
-
-  const query = 'INSERT INTO tbl_user (email, name, password) VALUES (?, ?, ?)';
-  db.query(query, [email, name, password], (err, result) => {
-    if (err) {
-      console.error('Fehler beim Eintragen der Daten:', err);
-      res.status(500).json({ message: 'Fehler beim Eintragen der Daten.' });
-      return;
-    }
-    res.status(200).json({ message: 'Daten erfolgreich eingetragen.' });
-  });
-});
-
 app.post('/tbl_media', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
   const { name, type, genre } = req.body;
@@ -153,6 +138,93 @@ app.post('/tbl_tracked', (req, res) => {
 
     console.log('Medium erfolgreich getrackt:', results);
     res.status(201).json({ message: 'Medium erfolgreich getrackt.', id: results.insertId });
+  });
+});
+app.post('/signup', async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
+  const { email, username, password } = req.body;
+  const picture = 1;
+
+  console.log('Empfangene Daten:', { email, username, password });
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log('Gehashtes Passwort:', hashedPassword);
+
+    const query = 'INSERT INTO tbl_user (email, username, password, picture) VALUES (?, ?, ?, ?)';
+    db.query(query, [email, username, hashedPassword, picture], (err, result) => {
+      if (err) {
+        console.error('Fehler beim Eintragen der Daten:', err);
+        res.status(500).json({ message: 'Fehler beim Eintragen der Daten.' });
+        return;
+      }
+      res.status(200).json({ message: 'Daten erfolgreich eingetragen.' });
+    });
+  } catch (error) {
+    console.error('Fehler beim Hashen des Passworts:', error);
+    res.status(500).json({ message: 'Fehler beim Hashen des Passworts.' });
+  }
+});
+
+app.post('/login', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
+  const { username, password } = req.body;
+  const query = 'SELECT userID, email, username, password, picture FROM tbl_user WHERE username = ?';
+  db.query(query, [username], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Daten:', err);
+      res.status(500).json({ message: 'Fehler beim Abrufen der Daten.' });
+      return;
+    }
+    if (results.length === 0) {
+      res.status(401).json({ message: 'Benutzername nicht gefunden.' });
+      return;
+    }
+    const user = results[0];
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (err) {
+        console.error('Fehler beim Vergleichen der Passwörter:', err);
+        res.status(500).json({ message: 'Fehler beim Vergleichen der Passwörter.' });
+        return;
+      }
+      if (!isMatch) {
+        res.status(401).json({ message: 'Falsches Passwort.' });
+        return;
+      }
+      res.status(200).json({
+        message: 'Login erfolgreich.',
+        id: user.userID,
+        username: user.username,
+        email: user.email,
+        picture: user.picture
+      });
+    });
+  });
+});
+app.post('/update-picture', (req, res) => {
+  const { userId, picture } = req.body;
+  const query = 'UPDATE tbl_user SET picture = ? WHERE userID = ?';
+  db.query(query, [picture, userId], (err, result) => {
+    if (err) {
+      console.error('Fehler beim Aktualisieren des Profilbildes:', err);
+      res.status(500).json({ message: 'Fehler beim Aktualisieren des Profilbildes.' });
+      return;
+    }
+    res.status(200).json({ message: 'Profilbild erfolgreich aktualisiert.' });
+  });
+});
+app.get('/statistics', (req, res) => {
+  const query = `
+    SELECT genre, type, COUNT(*) as count
+    FROM tbl_tracked
+    GROUP BY genre, type;
+  `;
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Statistikdaten:', err);
+      return res.status(500).json({ message: 'Fehler beim Abrufen der Statistikdaten.' });
+    }
+    res.json(results);
   });
 });
 
