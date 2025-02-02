@@ -48,7 +48,7 @@ export const routes: Routes = [
   },
   {
     path: 'edittracking',
-    loadComponent: () => import('./edittracking/edittracking.page').then( m => m.EdittrackingPage)
+    loadComponent: () => import('./pages/edittracking/edittracking.page').then( m => m.EdittrackingPage)
   }
 
 ];

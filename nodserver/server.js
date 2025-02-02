@@ -228,6 +228,37 @@ app.get('/statistics', (req, res) => {
   });
 });
 
+app.get('/user-trackings/:userID', (req, res) => {
+  const userID = req.params.userID;
+  
+  let query = 'SELECT id, mediaID, comments, finished FROM tbl_tracked WHERE userID = ?';
+  const params = [userID];
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Trackings:', err);
+      return res.status(500).json({ message: 'Fehler beim Abrufen der Trackings.' });
+    }
+    res.status(200).json(results);
+  });
+});
+
+app.put('/tbl_tracked/:id', (req, res) => {
+  const { comments, finished } = req.body;
+  const { id } = req.params;
+
+  let query = 'UPDATE tbl_tracked SET comments = ?, finished = ? WHERE id = ?';
+  const params = [comments, finished, id];
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Aktualisieren des Trackings:', err);
+      return res.status(500).json({ message: 'Fehler beim Aktualisieren des Trackings.' });
+    }
+    res.status(200).json({ message: 'Tracking erfolgreich aktualisiert.', results });
+  });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);

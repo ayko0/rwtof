@@ -1,13 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>edittracking</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">edittracking</ion-title>
+      <ion-title size="large">Trackings bearbeiten</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div class="container">
+    <div class="logo">
+      <img src="assets/animal.png" alt="Logo">
+    </div>
+    <div class="data" *ngIf="trackings.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>Media ID</th>
+            <th>Kommentar</th>
+            <th>Fertiggestellt</th>
+            <th>Aktionen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tracking of trackings">
+            <td>{{ tracking.mediaID }}</td>
+            <td><ion-textarea [(ngModel)]="tracking.comments"></ion-textarea></td>
+            <td><ion-toggle [(ngModel)]="tracking.finished"></ion-toggle></td>
+            <td><ion-button (click)="updateTracking(tracking)">Speichern</ion-button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </ion-content>
+
+
