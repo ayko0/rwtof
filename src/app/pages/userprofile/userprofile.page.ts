@@ -5,14 +5,13 @@ import { HttpClient } from '@angular/common/http';
 import { IonContent, IonItem, IonLabel, IonButton, IonThumbnail, IonTitle, IonToolbar, IonHeader } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgChartsModule } from 'ng2-charts';
 
 @Component({
   selector: 'app-userprofile',
   templateUrl: './userprofile.page.html',
   styleUrls: ['./userprofile.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonButton, IonItem, IonLabel, IonContent, IonThumbnail, CommonModule, FormsModule, NgChartsModule]
+  imports: [IonHeader, IonToolbar, IonTitle, IonButton, IonItem, IonLabel, IonContent, IonThumbnail, CommonModule, FormsModule]
 })
 export class UserprofilePage implements OnInit {
   userId: string = '';
