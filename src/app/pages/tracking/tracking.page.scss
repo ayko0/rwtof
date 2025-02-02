@@ -111,3 +111,11 @@ ion-button:hover {
   height: 140px;
   object-fit: cover;
 }
+
+ion-modal {
+  --ion-background-color: #ffffff;
+}
+
+ion-modal ion-label, ion-modal ion-textarea {
+  color: #000000;
+}

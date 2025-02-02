@@ -44,13 +44,37 @@
           <tr *ngFor="let medium of filteredMediaList">
             <td><img [src]="medium.imgURL" alt="Media Image" class="small-image"></td>
             <td>{{ medium.name }}</td>
-            <td><ion-button (click)="trackMedia(medium.mediaID)">Tracken</ion-button></td>
+            <td><ion-button (click)="openTrackMediaModal(medium.mediaID)">Tracking starten</ion-button></td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </ion-content>
+
+<ion-modal [isOpen]="isTrackModalOpen" (ionModalDidDismiss)="isTrackModalOpen = false">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Füge deine Ziele in Worten hinzu</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="isTrackModalOpen = false">Schließen</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <form (ngSubmit)="trackMedia()" #commentForm="ngForm">
+        <ion-item>
+          <ion-label position="floating">Kommentar</ion-label>
+          <ion-textarea [(ngModel)]="media.comments" name="comments" required></ion-textarea>
+        </ion-item>
+        <ion-button expand="full" type="submit" [disabled]="!commentForm.form.valid">Speichern</ion-button>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+
 
 
 
