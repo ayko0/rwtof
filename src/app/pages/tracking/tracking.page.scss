@@ -1,5 +1,5 @@
 ion-content {
-  --background: #7490b0b4; /* Hintergrundfarbe wiederhergestellt */
+  --background: #f8f5f7;
 }
 
 @keyframes fadeIn {
@@ -58,7 +58,7 @@ th, td {
   border: 1px solid #87cefa;
   padding: 10px;
   text-align: left;
-  color: #1f3a93; /* Dunkles Marineblau für die Schrift */
+  color: #1f3a93;
 }
 
 th {
@@ -88,8 +88,8 @@ ion-item:hover {
 ion-select {
   --padding-start: 16px;
   --padding-end: 16px;
-  --height: 60px; /* Höhe des Auswahlfelds vergrößert */
-  color: #1f3a93; /* Farbe des Texts im Auswahlfeld */
+  --height: 60px;
+  color: #1f3a93;
 }
 
 ion-button {
