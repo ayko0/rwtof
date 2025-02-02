@@ -212,6 +212,21 @@ app.post('/update-picture', (req, res) => {
     res.status(200).json({ message: 'Profilbild erfolgreich aktualisiert.' });
   });
 });
+app.get('/statistics', (req, res) => {
+  const query = `
+    SELECT genre, type, COUNT(*) as count
+    FROM tbl_tracked
+    GROUP BY genre, type;
+  `;
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Statistikdaten:', err);
+      return res.status(500).json({ message: 'Fehler beim Abrufen der Statistikdaten.' });
+    }
+    res.json(results);
+  });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
