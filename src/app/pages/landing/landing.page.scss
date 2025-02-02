@@ -18,18 +18,19 @@ ion-img {
   transform: translate(-50%, -50%);
 }
 ion-button {
-  --background: #FBB3DA;
+  --background: #87cefa;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   height: 50px;
   width: 300px;
+  margin-top: 30px;
 }
 ion-button:hover {
-  --background: #A8E5E3;
+  --background: #ffb6c1;
 }
 .center {
   margin: 0;
   position: absolute;
-  top: 65%;
+  top: 67%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -39,7 +40,7 @@ ion-icon {
   color: #582031;
 }
 p{
-  color: #746e6d;
+  color: #ffffff;
   font-size: 20px;
   line-height: 25px;
   margin: 0;

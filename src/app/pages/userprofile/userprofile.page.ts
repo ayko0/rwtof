@@ -25,12 +25,6 @@ export class UserprofilePage implements OnInit {
     scaleShowVerticalLines: false,
     responsive: true
   };
-  public barChartLabels: string[] = [];
-  public barChartType = 'bar';
-  public barChartLegend = true;
-  public barChartData = [
-    { data: [], label: 'Count' }
-  ];
 
   constructor(private authService: AuthService, private router: Router, private http: HttpClient) {}
 
@@ -45,7 +39,6 @@ export class UserprofilePage implements OnInit {
       this.router.navigate(['/login']);
     } else {
       this.loadProfile();
-      this.getStatistics();
     }
   }
 
@@ -63,18 +56,6 @@ export class UserprofilePage implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
-  }
-
-  getStatistics() {
-    this.http.get('http://localhost:3000/statistics')
-      .subscribe((data: any) => {
-        const genres = data.map((item: any) => item.genre);
-        const counts = data.map((item: any) => item.count);
-        this.barChartLabels = genres;
-        this.barChartData[0].data = counts;
-      }, error => {
-        console.error('Fehler beim Abrufen der Statistikdaten:', error);
-      });
   }
 
   togglePicture() {

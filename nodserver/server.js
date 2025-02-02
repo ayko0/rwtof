@@ -8,7 +8,6 @@ const fileUpload = require('express-fileupload');
 const app = express();
 const PORT = 3000;
 
-// CORS-Konfiguration
 app.use(cors({
   origin: 'http://localhost:8100',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -18,7 +17,7 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// MySQL-Datenbankverbindung
+//dbverbindung
 const db = mysql.createConnection({
   host: 'db4free.net',
   user: 'userrwt',
