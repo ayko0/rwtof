@@ -85,7 +85,7 @@ app.post('/tbl_media', (req, res) => {
   });
 });
 
-app.get('/tbl_media', (req, res) => {
+/* app.get('/tbl_media', (req, res) => {
    const mediaType = req.query.type;
    console.log('Anfrage für Medien des Typs:', mediaType);
    const query = 'SELECT img, name FROM tbl_media WHERE type = ?';
@@ -98,7 +98,7 @@ app.get('/tbl_media', (req, res) => {
      console.log('Erhaltene Daten:', results);
      res.json(results);
    });
- });
+ }); */
 
 app.get('/tbl_media', (req, res) => {
   const mediaType = req.query.type;
@@ -226,8 +226,6 @@ app.get('/statistics', (req, res) => {
     res.json(results);
   });
 });
-
-
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
 });
