@@ -85,21 +85,6 @@ app.post('/tbl_media', (req, res) => {
   });
 });
 
-/* app.get('/tbl_media', (req, res) => {
-   const mediaType = req.query.type;
-   console.log('Anfrage für Medien des Typs:', mediaType);
-   const query = 'SELECT img, name FROM tbl_media WHERE type = ?';
-   db.query(query, [mediaType], (err, results) => {
-     if (err) {
-       console.error('Fehler beim Abrufen der Mediendaten:', err);
-       return res.status(500).json({ message: 'Fehler beim Abrufen der Mediendaten.' });
-     }
-
-     console.log('Erhaltene Daten:', results);
-     res.json(results);
-   });
- }); */
-
 app.get('/tbl_media', (req, res) => {
   const mediaType = req.query.type;
   const mediaGenre = req.query.genre;
@@ -226,6 +211,39 @@ app.get('/statistics', (req, res) => {
     res.json(results);
   });
 });
+
+app.get('/user-trackings/:userID', (req, res) => {
+  const userID = req.params.userID;
+  
+  let query = 'SELECT id, mediaID, comments, finished FROM tbl_tracked WHERE userID = ?';
+  const params = [userID];
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Trackings:', err);
+      return res.status(500).json({ message: 'Fehler beim Abrufen der Trackings.' });
+    }
+    res.status(200).json(results);
+  });
+});
+
+app.put('/tbl_tracked/:id', (req, res) => {
+  const { comments, finished } = req.body;
+  const { id } = req.params;
+
+  let query = 'UPDATE tbl_tracked SET comments = ?, finished = ? WHERE id = ?';
+  const params = [comments, finished, id];
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Aktualisieren des Trackings:', err);
+      return res.status(500).json({ message: 'Fehler beim Aktualisieren des Trackings.' });
+    }
+    res.status(200).json({ message: 'Tracking erfolgreich aktualisiert.', results });
+  });
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
 });
