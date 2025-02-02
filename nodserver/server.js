@@ -116,6 +116,46 @@ app.get('/tbl_media', (req, res) => {
   });
 });
 
+app.get('/tbl_media', (req, res) => {
+  const mediaType = req.query.type;
+  const mediaGenre = req.query.genre;
+  console.log('Anfrage für Medien des Typs:', mediaType, 'und Genres:', mediaGenre);
+  
+  let query = 'SELECT mediaID, name, img FROM tbl_media WHERE type = ?';
+  const params = [mediaType];
+
+  if (mediaGenre) {
+    query += ' AND genre = ?';
+    params.push(mediaGenre);
+  }
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Mediendaten:', err);
+      return res.status(500).json({ message: 'Fehler beim Abrufen der Mediendaten.' });
+    }
+
+    console.log('Erhaltene Daten:', results);
+    res.json(results);
+  });
+});
+
+app.post('/tbl_tracked', (req, res) => {
+  const { mediaID, userID, type, genre, finished, comments } = req.body;
+  
+  const query = 'INSERT INTO tbl_tracked (mediaID, userID, type, genre, finished, comments) VALUES (?, ?, ?, ?, ?, ?)';
+  const params = [mediaID, userID, type, genre, finished, comments];
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Tracken des Mediums:', err);
+      return res.status(500).json({ message: 'Fehler beim Tracken des Mediums.' });
+    }
+
+    console.log('Medium erfolgreich getrackt:', results);
+    res.status(201).json({ message: 'Medium erfolgreich getrackt.', id: results.insertId });
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server läuft auf http://localhost:${PORT}`);
