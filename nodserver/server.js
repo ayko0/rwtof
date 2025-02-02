@@ -85,20 +85,20 @@ app.post('/tbl_media', (req, res) => {
   });
 });
 
-// app.get('/tbl_media', (req, res) => {
-//   const mediaType = req.query.type;
-//   console.log('Anfrage für Medien des Typs:', mediaType);
-//   const query = 'SELECT img, name FROM tbl_media WHERE type = ?';
-//   db.query(query, [mediaType], (err, results) => {
-//     if (err) {
-//       console.error('Fehler beim Abrufen der Mediendaten:', err);
-//       return res.status(500).json({ message: 'Fehler beim Abrufen der Mediendaten.' });
-//     }
+app.get('/tbl_media', (req, res) => {
+   const mediaType = req.query.type;
+   console.log('Anfrage für Medien des Typs:', mediaType);
+   const query = 'SELECT img, name FROM tbl_media WHERE type = ?';
+   db.query(query, [mediaType], (err, results) => {
+     if (err) {
+       console.error('Fehler beim Abrufen der Mediendaten:', err);
+       return res.status(500).json({ message: 'Fehler beim Abrufen der Mediendaten.' });
+     }
 
-//     console.log('Erhaltene Daten:', results);
-//     res.json(results);
-//   });
-// });
+     console.log('Erhaltene Daten:', results);
+     res.json(results);
+   });
+ });
 
 app.get('/tbl_media', (req, res) => {
   const mediaType = req.query.type;
