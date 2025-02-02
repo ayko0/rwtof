@@ -10,13 +10,14 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './userprofile.page.html',
   styleUrls: ['./userprofile.page.scss'],
   standalone: true,
-  imports: [IonButton, IonItem, IonLabel, IonContent, IonHeader, IonTitle, CommonModule, FormsModule]
+  imports: [IonButton, IonItem, IonLabel, IonToolbar, IonContent, IonHeader, IonTitle, CommonModule, FormsModule]
 })
 export class UserprofilePage implements OnInit {
   
   userId: string='';
   username: string='';
   email: string='';
+  selectedPicture: string = 'assets/default-profile.png'; // Füge einen Standardpfad hinzu
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -46,6 +47,11 @@ export class UserprofilePage implements OnInit {
     }
   }
 
+  togglePicture() {
+    // Beispiel-Logik zum Wechseln des Profilbildes
+    this.selectedPicture = this.selectedPicture === 'assets/default-profile.png' ? 'assets/another-profile.png' : 'assets/default-profile.png';
+  }
+
   logout() {
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
@@ -53,7 +59,9 @@ export class UserprofilePage implements OnInit {
     this.authService.logout();
     this.router.navigate(['/landing']);
   }
+  
   home() {
     this.router.navigate(['/home']);
   }
 }
+
