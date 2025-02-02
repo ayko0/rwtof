@@ -13,8 +13,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButt
 })
 export class EdittrackingPage implements OnInit {
   trackings: any[] = [];
-  userID: number = 16; // Beispiel User-ID 16
-
+  userID: number = parseInt(localStorage.getItem('userId') || '0', 10);
   constructor(private http: HttpClient) { }
 
   ngOnInit() {

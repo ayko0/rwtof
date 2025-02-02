@@ -15,13 +15,13 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButt
 export class TrackingPage implements OnInit {
   media = {
     type: '',
-    genre: 0 as number, // Ändere den Typ zu Zahl
-    comments: '' // Kommentar als String hinzufügen
+    genre: 0 as number,
+    comments: ''
   };
 
   mediaList: any[] = [];
-  isTrackModalOpen = false; // Modal-Status
-  selectedMediaID: number = 0; // Initialisiere mit 0, um null zu vermeiden
+  isTrackModalOpen = false;
+  selectedMediaID: number = 0;
 
   genres: { [key: string]: { id: number; name: string }[] } = { 
     '1': [{ id: 1, name: 'Fantasy' }, { id: 2, name: 'Science-Fiction' }, { id: 3, name: 'Krimi' }, { id: 4, name: 'Historischer Roman' }, { id: 5, name: 'Horror' }, { id: 6, name: 'Abenteuer' }, { id: 7, name: 'Liebesroman' }],
@@ -42,10 +42,10 @@ export class TrackingPage implements OnInit {
     const selectedType = event.detail.value;
     if (selectedType) {
       this.availableGenres = this.genres[selectedType];
-      this.media.genre = 0;  // Initialisiere Genre als Integer
+      this.media.genre = 0;
     } else {
       this.availableGenres = [];
-      this.media.genre = 0;  // Initialisiere Genre als Integer
+      this.media.genre = 0;
     }
   }
 
@@ -78,7 +78,7 @@ export class TrackingPage implements OnInit {
   trackMedia() {
     const trackData = {
       mediaID: this.selectedMediaID,
-      userID: 17, // Beispiel User-ID
+      userID: parseInt(localStorage.getItem('userId') || '0', 10),
       type: this.selectedType,
       genre: this.selectedGenre,
       finished: 0,
