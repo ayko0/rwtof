@@ -37,7 +37,7 @@ export class LoginPage {
 
     this.authService.login({ username: this.username, password: this.password }).subscribe(async (response) => {
       console.log(response);
-      // Überprüfen, ob die response.id und response.username vorhanden sind
+
       if (response && response.id && response.username) {
         localStorage.setItem('userId', response.id.toString());
         localStorage.setItem('username', response.username);
